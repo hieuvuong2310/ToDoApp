@@ -14,6 +14,7 @@
 		3A9060F32937DD48003648F6 /* ToDoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060F22937DD48003648F6 /* ToDoAppTests.swift */; };
 		3A9060FD2937DD48003648F6 /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060FC2937DD48003648F6 /* ToDoAppUITests.swift */; };
 		3A9060FF2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060FE2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift */; };
+		3A90611A2937DEE7003648F6 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9061192937DEE7003648F6 /* ToDoService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		3A9060F82937DD48003648F6 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9060FC2937DD48003648F6 /* ToDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITests.swift; sourceTree = "<group>"; };
 		3A9060FE2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3A9061192937DEE7003648F6 /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				3A9060E32937DD47003648F6 /* ContentView.swift */,
 				3A9060E52937DD48003648F6 /* Assets.xcassets */,
 				3A9060E72937DD48003648F6 /* Preview Content */,
+				3A9061192937DEE7003648F6 /* ToDoService.swift */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
@@ -141,7 +144,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				3A90610D2937DD8D003648F6 /* PBXTargetDependency */,
+				3A9061182937DECD003648F6 /* PBXTargetDependency */,
 			);
 			name = ToDoApp;
 			productName = ToDoApp;
@@ -217,7 +220,7 @@
 			);
 			mainGroup = 3A9060D52937DD47003648F6;
 			packageReferences = (
-				3A90610B2937DD83003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				3A9061162937DEC5003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 3A9060DF2937DD47003648F6 /* Products */;
 			projectDirPath = "";
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A90611A2937DEE7003648F6 /* ToDoService.swift in Sources */,
 				3A9060E42937DD47003648F6 /* ContentView.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
 			);
@@ -296,9 +300,9 @@
 			target = 3A9060DD2937DD47003648F6 /* ToDoApp */;
 			targetProxy = 3A9060F92937DD48003648F6 /* PBXContainerItemProxy */;
 		};
-		3A90610D2937DD8D003648F6 /* PBXTargetDependency */ = {
+		3A9061182937DECD003648F6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 3A90610C2937DD8D003648F6 /* SwiftLintPlugin */;
+			productRef = 3A9061172937DECD003648F6 /* SwiftLintPlugin */;
 		};
 /* End PBXTargetDependency section */
 
@@ -593,7 +597,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3A90610B2937DD83003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+		3A9061162937DEC5003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/SwiftLint";
 			requirement = {
@@ -604,9 +608,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3A90610C2937DD8D003648F6 /* SwiftLintPlugin */ = {
+		3A9061172937DECD003648F6 /* SwiftLintPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3A90610B2937DD83003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */;
+			package = 3A9061162937DEC5003648F6 /* XCRemoteSwiftPackageReference "SwiftLint" */;
 			productName = "plugin:SwiftLintPlugin";
 		};
 /* End XCSwiftPackageProductDependency section */
