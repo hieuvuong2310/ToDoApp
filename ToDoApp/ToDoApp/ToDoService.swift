@@ -13,21 +13,36 @@ enum TaskError: Error {
 
 struct Task {
     var id: UUID = UUID()
-    var title: String = "New Task"
-    var note: String = "New Note"
+    var title: String
+    var note: String?
     var deadline: Date?
     var status: Bool = false
 }
 
+protocol DateChecker {
+    func isDateInToday(_ date: Date) -> Bool
+}
+//  conform Calendar to this protocol
+extension Calendar: DateChecker {}
+
 protocol ToDoService {
     func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError>
     func updateTask(todo: Task) async -> Result<Task, TaskError>
-    func taskForToday() -> [Task]
-    func checkIsToday(date: Date?) -> Bool
+    func taskForToday() async -> [Task]
 }
 
 final class FeaturesToDo: ToDoService {
+    // Private properties
     private var tasks: [Task] = []
+    // MARK: - Dependencies
+    private let dateChecker: DateChecker
+    // MARK: - Init
+    init(dateChecker: DateChecker) {
+        self.dateChecker = dateChecker
+    }
+    convenience init() {
+        self.init(dateChecker: Calendar.current)
+    }
     // Create a task
     func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError> {
         let oneTask = Task(title: title, note: note, deadline: deadline)
@@ -45,17 +60,12 @@ final class FeaturesToDo: ToDoService {
         return Result.success(todo)
     }
     // Get list of tasks for today
-    func taskForToday() -> [Task] {
-        let date = Date.now
-        let todayList = tasks.filter({checkIsToday(date: $0.deadline ?? nil)})
-        return todayList
-    }
-    // Check whether the deadline is today
-    func checkIsToday(date: Date?) -> Bool {
-        var cal: Calendar = Calendar(identifier: .hebrew)
-        if date == nil {
-            return false
-        }
-        return cal.isDateInToday(date!)
+    func taskForToday() async -> [Task] {
+            tasks.filter {
+                if let deadline = $0.deadline {
+                    return dateChecker.isDateInToday(deadline)
+                }
+                return false
+            }
     }
 }
