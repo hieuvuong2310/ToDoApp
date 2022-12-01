@@ -12,7 +12,7 @@ enum TaskError: Error {
 }
 
 struct Task {
-    var id: UUID = UUID()
+    let id: UUID = UUID()
     var title: String
     var note: String?
     var deadline: Date?
