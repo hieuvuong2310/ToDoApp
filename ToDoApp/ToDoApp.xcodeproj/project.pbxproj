@@ -14,7 +14,6 @@
 		3A9060F32937DD48003648F6 /* ToDoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060F22937DD48003648F6 /* ToDoAppTests.swift */; };
 		3A9060FD2937DD48003648F6 /* ToDoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060FC2937DD48003648F6 /* ToDoAppUITests.swift */; };
 		3A9060FF2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060FE2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift */; };
-		3A90611A2937DEE7003648F6 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9061192937DEE7003648F6 /* ToDoService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,7 +44,6 @@
 		3A9060F82937DD48003648F6 /* ToDoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9060FC2937DD48003648F6 /* ToDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITests.swift; sourceTree = "<group>"; };
 		3A9060FE2937DD48003648F6 /* ToDoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		3A9061192937DEE7003648F6 /* ToDoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +98,6 @@
 				3A9060E32937DD47003648F6 /* ContentView.swift */,
 				3A9060E52937DD48003648F6 /* Assets.xcassets */,
 				3A9060E72937DD48003648F6 /* Preview Content */,
-				3A9061192937DEE7003648F6 /* ToDoService.swift */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
@@ -264,7 +261,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A90611A2937DEE7003648F6 /* ToDoService.swift in Sources */,
 				3A9060E42937DD47003648F6 /* ContentView.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
 			);
