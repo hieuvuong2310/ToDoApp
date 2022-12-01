@@ -12,43 +12,50 @@ enum TaskError: Error {
 }
 
 struct Task {
-    var id: String = ""
-    var name: String = ""
-    var deadline: Date = Date.now
+    var id: UUID = UUID()
+    var title: String = "New Task"
+    var note: String = "New Note"
+    var deadline: Date?
     var status: Bool = false
-    init(name: String, deadline: Date?) {
-        self.name = name
-        self.deadline = deadline!
-    }
 }
 
 protocol ToDoService {
-    func createTask(name: String, deadline: Date?) -> Task
-    func updateTask(todo: Task) throws
+    func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError>
+    func updateTask(todo: Task) async -> Result<Task, TaskError>
     func taskForToday() -> [Task]
+    func checkIsToday(date: Date?) -> Bool
 }
 
 final class FeaturesToDo: ToDoService {
     private var tasks: [Task] = []
     // Create a task
-    func createTask(name: String, deadline: Date?) -> Task {
-        let oneTask = Task(name: name, deadline: deadline)
+    func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError> {
+        let oneTask = Task(title: title, note: note, deadline: deadline)
         tasks.append(oneTask)
-        return oneTask
+        return Result.success(oneTask)
     }
     // Update the task
-    func updateTask(todo: Task) throws {
+    func updateTask(todo: Task) async -> Result<Task, TaskError> {
         guard let index = tasks.firstIndex(where: {
             $0.id == todo.id
         })else {
-            throw TaskError.unavailableTask
+            return Result.failure(TaskError.unavailableTask)
         }
-        tasks.insert(todo, at: index)
+        tasks[index] = todo
+        return Result.success(todo)
     }
     // Get list of tasks for today
     func taskForToday() -> [Task] {
         let date = Date.now
-        let todayList = tasks.filter({$0.deadline == date})
+        let todayList = tasks.filter({checkIsToday(date: $0.deadline ?? nil)})
         return todayList
+    }
+    // Check whether the deadline is today
+    func checkIsToday(date: Date?) -> Bool {
+        var cal: Calendar = Calendar(identifier: .hebrew)
+        if date == nil {
+            return false
+        }
+        return cal.isDateInToday(date!)
     }
 }
