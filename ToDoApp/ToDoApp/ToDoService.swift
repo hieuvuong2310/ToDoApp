@@ -28,7 +28,7 @@ extension Calendar: DateChecker {}
 protocol ToDoService {
     func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError>
     func updateTask(todo: Task) async -> Result<Task, TaskError>
-    func taskForToday() async -> [Task]
+    func taskForToday() async -> Result<[Task], TaskError>
 }
 
 final class FeaturesToDo: ToDoService {
@@ -60,12 +60,13 @@ final class FeaturesToDo: ToDoService {
         return Result.success(todo)
     }
     // Get list of tasks for today
-    func taskForToday() async -> [Task] {
-            tasks.filter {
-                if let deadline = $0.deadline {
-                    return dateChecker.isDateInToday(deadline)
-                }
-                return false
+    func taskForToday() async -> Result<[Task], TaskError> {
+        let todayTasks = tasks.filter {
+            if let deadline = $0.deadline {
+                return dateChecker.isDateInToday(deadline)
             }
+            return false
+        }
+        return Result.success(todayTasks)
     }
 }
