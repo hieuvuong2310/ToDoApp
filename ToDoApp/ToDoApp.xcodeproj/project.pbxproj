@@ -8,11 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F142938393A002EEE92 /* ToDoService.swift */; };
-		3A4C5F8D2939BA2D002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F8C2939BA2D002EEE92 /* CreateTaskView.swift */; };
-		3A4C5F8F2939BC33002EEE92 /* CreateTaskView-ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F8E2939BC33002EEE92 /* CreateTaskView-ViewModel.swift */; };
-		3A4C5F912939D581002EEE92 /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F902939D581002EEE92 /* DatePicker.swift */; };
+		3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */; };
+		3A4C5FAB293A88B5002EEE92 /* CreateTaskView+ModelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ModelView.swift */; };
 		3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060E12937DD47003648F6 /* ToDoAppApp.swift */; };
-		3A9060E42937DD47003648F6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060E32937DD47003648F6 /* ContentView.swift */; };
 		3A9060E62937DD48003648F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9060E52937DD48003648F6 /* Assets.xcassets */; };
 		3A9060E92937DD48003648F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9060E82937DD48003648F6 /* Preview Assets.xcassets */; };
 		3A9060F32937DD48003648F6 /* ToDoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060F22937DD48003648F6 /* ToDoAppTests.swift */; };
@@ -39,12 +37,10 @@
 
 /* Begin PBXFileReference section */
 		3A4C5F142938393A002EEE92 /* ToDoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
-		3A4C5F8C2939BA2D002EEE92 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
-		3A4C5F8E2939BC33002EEE92 /* CreateTaskView-ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTaskView-ViewModel.swift"; sourceTree = "<group>"; };
-		3A4C5F902939D581002EEE92 /* DatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePicker.swift; sourceTree = "<group>"; };
+		3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
+		3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ModelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTaskView+ModelView.swift"; sourceTree = "<group>"; };
 		3A9060DE2937DD47003648F6 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9060E12937DD47003648F6 /* ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppApp.swift; sourceTree = "<group>"; };
-		3A9060E32937DD47003648F6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		3A9060E52937DD48003648F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3A9060E82937DD48003648F6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3A9060EE2937DD48003648F6 /* ToDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +75,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A4C5FA0293A8552002EEE92 /* CreateTask */ = {
+			isa = PBXGroup;
+			children = (
+				3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */,
+				3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ModelView.swift */,
+			);
+			name = CreateTask;
+			sourceTree = "<group>";
+		};
+		3A4C5FAC293A90A6002EEE92 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3A4C5F142938393A002EEE92 /* ToDoService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		3A9060D52937DD47003648F6 = {
 			isa = PBXGroup;
 			children = (
@@ -102,14 +115,11 @@
 		3A9060E02937DD47003648F6 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				3A4C5FAC293A90A6002EEE92 /* Service */,
+				3A4C5FA0293A8552002EEE92 /* CreateTask */,
 				3A9060E12937DD47003648F6 /* ToDoAppApp.swift */,
-				3A9060E32937DD47003648F6 /* ContentView.swift */,
-				3A4C5F142938393A002EEE92 /* ToDoService.swift */,
 				3A9060E52937DD48003648F6 /* Assets.xcassets */,
 				3A9060E72937DD48003648F6 /* Preview Content */,
-				3A4C5F8C2939BA2D002EEE92 /* CreateTaskView.swift */,
-				3A4C5F8E2939BC33002EEE92 /* CreateTaskView-ViewModel.swift */,
-				3A4C5F902939D581002EEE92 /* DatePicker.swift */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
@@ -228,6 +238,7 @@
 			);
 			mainGroup = 3A9060D52937DD47003648F6;
 			packageReferences = (
+				3A4C5F92293A8114002EEE92 /* XCRemoteSwiftPackageReference "SwiftLint" */,
 			);
 			productRefGroup = 3A9060DF2937DD47003648F6 /* Products */;
 			projectDirPath = "";
@@ -272,11 +283,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */,
-				3A4C5F8D2939BA2D002EEE92 /* CreateTaskView.swift in Sources */,
-				3A4C5F8F2939BC33002EEE92 /* CreateTaskView-ViewModel.swift in Sources */,
-				3A9060E42937DD47003648F6 /* ContentView.swift in Sources */,
+				3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */,
+				3A4C5FAB293A88B5002EEE92 /* CreateTaskView+ModelView.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
-				3A4C5F912939D581002EEE92 /* DatePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +610,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3A4C5F92293A8114002EEE92 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 3A9060D62937DD47003648F6 /* Project object */;
 }
