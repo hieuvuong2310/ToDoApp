@@ -12,6 +12,7 @@ struct CreateTaskView: View {
     @StateObject private var createTaskViewModel = CreateTaskViewModel()
     @State var titleInput: String = ""
     @State var showDatePicker = false
+    @State var chooseDateTitle: String = "Choose date"
     @State var date: Date = Date()
     var body: some View {
         NavigationStack {
@@ -27,7 +28,7 @@ struct CreateTaskView: View {
                             .stroke(Color.accentColor, lineWidth: 2)
                     )
                 Text("Date of Completion")
-                Text("Choose date")
+                Text(self.chooseDateTitle)
                 .onTapGesture {
                     self.showDatePicker.toggle()
                 }
@@ -41,6 +42,10 @@ struct CreateTaskView: View {
                     DatePicker("Enter your Deadline", selection: $date)
                         .datePickerStyle(GraphicalDatePickerStyle())
                         .frame(maxWidth: 390, maxHeight: 400)
+                        .onTapGesture {
+                            self.showDatePicker.toggle()
+                            self.chooseDateTitle = self.date.description
+                        }
                 }
                 Spacer()
             }
