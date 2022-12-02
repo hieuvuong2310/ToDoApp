@@ -42,10 +42,6 @@ struct CreateTaskView: View {
                     DatePicker("Enter your Deadline", selection: $date)
                         .datePickerStyle(GraphicalDatePickerStyle())
                         .frame(maxWidth: 390, maxHeight: 400)
-                        .onTapGesture {
-                            self.showDatePicker.toggle()
-                            self.chooseDateTitle = self.date.description
-                        }
                 }
                 Spacer()
             }
