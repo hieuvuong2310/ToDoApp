@@ -11,16 +11,12 @@ import SwiftUI
 struct CreateTaskView: View {
     @StateObject private var createTaskViewModel = CreateTaskViewModel()
     @State var titleInput: String = ""
-    @State var showDatePicker = false
-    @State var chooseDateTitle: String = "Choose date"
     @State var date: Date = Date()
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Task Title")
-                        .multilineTextAlignment(.leading)
-                        .frame(minHeight: 20.0)
                     TextField("Insert Title", text: $titleInput)
                         .padding(.horizontal, 10.0)
                         .textInputAutocapitalization(.words)
@@ -31,7 +27,7 @@ struct CreateTaskView: View {
                     )
                 }
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Date of Completion")  
+                    Text("Date of Completion")
                     DatePicker(selection: $date) {
                         Text("Select date")
                     }

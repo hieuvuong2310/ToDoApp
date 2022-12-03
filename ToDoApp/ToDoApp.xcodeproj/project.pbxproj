@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F142938393A002EEE92 /* ToDoService.swift */; };
 		3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */; };
-		3A4C5FAB293A88B5002EEE92 /* CreateTaskView+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ViewModel.swift */; };
+		3A4C5FAB293A88B5002EEE92 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FAA293A88B5002EEE92 /* CreateTaskViewModel.swift */; };
 		3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A9060E12937DD47003648F6 /* ToDoAppApp.swift */; };
 		3A9060E62937DD48003648F6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9060E52937DD48003648F6 /* Assets.xcassets */; };
 		3A9060E92937DD48003648F6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3A9060E82937DD48003648F6 /* Preview Assets.xcassets */; };
@@ -38,7 +38,7 @@
 /* Begin PBXFileReference section */
 		3A4C5F142938393A002EEE92 /* ToDoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 		3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
-		3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateTaskView+ViewModel.swift"; sourceTree = "<group>"; };
+		3A4C5FAA293A88B5002EEE92 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
 		3A9060DE2937DD47003648F6 /* ToDoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A9060E12937DD47003648F6 /* ToDoAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoAppApp.swift; sourceTree = "<group>"; };
 		3A9060E52937DD48003648F6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */,
-				3A4C5FAA293A88B5002EEE92 /* CreateTaskView+ViewModel.swift */,
+				3A4C5FAA293A88B5002EEE92 /* CreateTaskViewModel.swift */,
 			);
 			name = CreateTask;
 			sourceTree = "<group>";
@@ -284,7 +284,7 @@
 			files = (
 				3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */,
 				3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */,
-				3A4C5FAB293A88B5002EEE92 /* CreateTaskView+ViewModel.swift in Sources */,
+				3A4C5FAB293A88B5002EEE92 /* CreateTaskViewModel.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
