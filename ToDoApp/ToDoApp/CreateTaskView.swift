@@ -16,45 +16,45 @@ struct CreateTaskView: View {
     @State var date: Date = Date()
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: 15) {
-                Text("Task Title")
-                    .multilineTextAlignment(.leading)
-                TextField("Insert Title", text: $titleInput)
-                    .padding(.horizontal, 10.0)
-                    .textInputAutocapitalization(.words)
-                    .frame(maxWidth: 390, maxHeight: 50)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 14)
-                            .stroke(Color.accentColor, lineWidth: 2)
+            VStack(alignment: .leading, spacing: 21) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Task Title")
+                        .multilineTextAlignment(.leading)
+                        .frame(minHeight: 20.0)
+                    TextField("Insert Title", text: $titleInput)
+                        .padding(.horizontal, 10.0)
+                        .textInputAutocapitalization(.words)
+                        .frame(minHeight: 44)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.accentColor, lineWidth: 1)
                     )
-                Text("Date of Completion")
-                Text(self.chooseDateTitle)
-                .onTapGesture {
-                    self.showDatePicker.toggle()
                 }
-                .frame(maxWidth: 390, maxHeight: 50, alignment: Alignment.leading)
-                .foregroundColor(Color.gray)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(Color.accentColor, lineWidth: 2)
-                )
-                if self.showDatePicker {
-                    DatePicker("Enter your Deadline", selection: $date)
-                        .datePickerStyle(GraphicalDatePickerStyle())
-                        .frame(maxWidth: 390, maxHeight: 400)
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Date of Completion")  
+                    DatePicker(selection: $date) {
+                        Text("Select date")
+                    }
+                    .padding(.horizontal)
+                    .frame(minHeight: 44)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.accentColor, lineWidth: 1)
+                    )
                 }
                 Spacer()
             }
+            .padding(.horizontal, 16.0)
             .toolbar {
-                ToolbarItem(id: "cancel", placement: .navigationBarLeading) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
                         createTaskViewModel.onCancelButtonTapped()
                     }
                 }
-                ToolbarItem(id: "create-title", placement: .principal) {
+                ToolbarItem(placement: .principal) {
                     Text("Create New Patient").bold()
                 }
-                ToolbarItem(id: "save", placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
                     }

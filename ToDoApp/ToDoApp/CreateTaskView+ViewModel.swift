@@ -6,13 +6,11 @@
 //
 
 import Foundation
-import SwiftUI
 
 extension CreateTaskView {
     @MainActor class CreateTaskViewModel: ObservableObject {
         @Published private(set) var titleInput: String = ""
         @Published private(set) var dateInput: Date?
-        @State private var services = FeaturesToDo()
         func onCancelButtonTapped() {
             print("Cancelled")
         }
