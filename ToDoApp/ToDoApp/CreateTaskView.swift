@@ -16,9 +16,9 @@ struct CreateTaskView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Task Title")
+                    Text("Task Name")
                     TextField("Insert Title", text: $titleInput)
-                        .padding(.horizontal, 10.0)
+                        .padding(.horizontal, 16.0)
                         .textInputAutocapitalization(.words)
                         .frame(minHeight: 44)
                         .overlay(
@@ -31,7 +31,7 @@ struct CreateTaskView: View {
                     DatePicker(selection: $date) {
                         Text("Select date")
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 16.0)
                     .frame(minHeight: 44)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
@@ -48,7 +48,7 @@ struct CreateTaskView: View {
                     }
                 }
                 ToolbarItem(placement: .principal) {
-                    Text("Create New Patient").bold()
+                    Text("Create New Task").bold()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
