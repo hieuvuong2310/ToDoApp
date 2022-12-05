@@ -23,8 +23,8 @@ struct CreateTaskView: View {
                         .frame(minHeight: 44)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.accentColor, lineWidth: 1)
-                    )
+                                .stroke(Color("TextField"), lineWidth: 1)
+                        )
                 }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
@@ -35,7 +35,7 @@ struct CreateTaskView: View {
                     .frame(minHeight: 44)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.accentColor, lineWidth: 1)
+                            .stroke(Color("TextField"), lineWidth: 1)
                     )
                 }
                 Spacer()
@@ -56,6 +56,7 @@ struct CreateTaskView: View {
                     }
                 }
             }
+            .foregroundColor(Color("Toolbar"))
         }
     }
 }
