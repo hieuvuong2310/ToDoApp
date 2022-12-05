@@ -24,7 +24,7 @@ struct CreateTaskView: View {
                         .frame(minHeight: 44)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color("secondaryAccent"), lineWidth: 1)
+                                .stroke(Color("SecondaryAccent"), lineWidth: 1)
                         )
                         .introspectTextField(customize: {
                                 $0.clearButtonMode = .whileEditing
