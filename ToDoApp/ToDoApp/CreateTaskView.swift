@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Introspect
 
 struct CreateTaskView: View {
     @StateObject private var createTaskViewModel = CreateTaskViewModel()
@@ -23,9 +24,13 @@ struct CreateTaskView: View {
                         .frame(minHeight: 44)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color("TextField"), lineWidth: 1)
+                                .stroke(Color("secondaryAccent"), lineWidth: 1)
                         )
-                }
+                        .introspectTextField(customize: {
+                                $0.clearButtonMode = .whileEditing
+                        })
+                    }
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
                     DatePicker(selection: $date) {
@@ -35,8 +40,9 @@ struct CreateTaskView: View {
                     .frame(minHeight: 44)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color("TextField"), lineWidth: 1)
+                            .stroke(Color("secondaryAccent"), lineWidth: 1)
                     )
+                    .tint(Color("secondaryAccent"))
                 }
                 Spacer()
             }
@@ -56,7 +62,7 @@ struct CreateTaskView: View {
                     }
                 }
             }
-            .foregroundColor(Color("Toolbar"))
+            .foregroundColor(Color("primaryAccent"))
         }
     }
 }
