@@ -62,7 +62,7 @@ struct CreateTaskView: View {
                     }
                 }
             }
-            .foregroundColor(Color("primaryAccent"))
+            .foregroundColor(Color("primaryText"))
         }
     }
 }
