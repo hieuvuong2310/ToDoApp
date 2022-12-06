@@ -17,7 +17,7 @@ struct CreateTaskView: View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Task Name")
+                    Text("Task Name").foregroundColor(Color("primaryText"))
                     TextField("Insert Title", text: $titleInput)
                         .padding(.horizontal, 16.0)
                         .textInputAutocapitalization(.words)
@@ -33,6 +33,7 @@ struct CreateTaskView: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
+                        .foregroundColor(Color("primaryText"))
                     DatePicker(selection: $date) {
                         Text("Select date")
                     }
@@ -62,7 +63,7 @@ struct CreateTaskView: View {
                     }
                 }
             }
-            .foregroundColor(Color("primaryText"))
+            .foregroundColor(Color("primaryAccent"))
         }
     }
 }
