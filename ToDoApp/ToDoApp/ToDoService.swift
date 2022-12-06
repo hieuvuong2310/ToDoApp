@@ -14,8 +14,7 @@ enum TaskError: Error {
 struct Task {
     let id: UUID = UUID()
     var title: String
-    var note: String?
-    var deadline: Date?
+    var deadline: Date
     var status: Bool = false
 }
 
@@ -26,7 +25,7 @@ protocol DateChecker {
 extension Calendar: DateChecker {}
 
 protocol ToDoService {
-    func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError>
+    func createTask(title: String, deadline: Date) async -> Result<Task, TaskError>
     func updateTask(todo: Task) async -> Result<Task, TaskError>
     func taskForToday() async -> Result<[Task], TaskError>
 }
@@ -44,8 +43,8 @@ final class FeaturesToDo: ToDoService {
         self.init(dateChecker: Calendar.current)
     }
     // Create a task
-    func createTask(title: String, note: String, deadline: Date?) async -> Result<Task, TaskError> {
-        let oneTask = Task(title: title, note: note, deadline: deadline)
+    func createTask(title: String, deadline: Date) async -> Result<Task, TaskError> {
+        let oneTask = Task(title: title, deadline: deadline)
         tasks.append(oneTask)
         return Result.success(oneTask)
     }
@@ -62,10 +61,7 @@ final class FeaturesToDo: ToDoService {
     // Get list of tasks for today
     func taskForToday() async -> Result<[Task], TaskError> {
         let todayTasks = tasks.filter {
-            if let deadline = $0.deadline {
-                return dateChecker.isDateInToday(deadline)
-            }
-            return false
+            return dateChecker.isDateInToday($0.deadline)
         }
         return Result.success(todayTasks)
     }

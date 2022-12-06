@@ -13,6 +13,7 @@ struct CreateTaskView: View {
     @StateObject private var createTaskViewModel = CreateTaskViewModel()
     @State var titleInput: String = ""
     @State var date: Date = Date()
+    @State var openAlert: Bool = false
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
@@ -60,12 +61,19 @@ struct CreateTaskView: View {
                     Text("Create New Task").bold()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
+                    Button("Save") {}
+                        .task{
+                        let result = try? await createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date).get()
+                        openAlert = result == false ? result!: true
                     }
                 }
             }
             .foregroundColor(Color(.primaryAccent))
+            .alert("Error", isPresented: $openAlert, actions: {
+               Button("Cancel", role: .cancel, action: {
+                  openAlert = false
+               })
+            }, message: { Text("Title cannot be left empty.") })
         }
     }
 }
