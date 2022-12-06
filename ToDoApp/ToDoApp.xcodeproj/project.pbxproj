@@ -79,6 +79,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3A360C69293FC8250054EED9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				3A360C6A293FC82E0054EED9 /* UI */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		3A360C6A293FC82E0054EED9 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				3A360C67293F225D0054EED9 /* ColorStyle.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		3A4C5FA0293A8552002EEE92 /* CreateTask */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,12 +135,12 @@
 		3A9060E02937DD47003648F6 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				3A360C69293FC8250054EED9 /* Common */,
 				3A4C5FAC293A90A6002EEE92 /* Service */,
 				3A4C5FA0293A8552002EEE92 /* CreateTask */,
 				3A9060E12937DD47003648F6 /* ToDoAppApp.swift */,
 				3A9060E52937DD48003648F6 /* Assets.xcassets */,
 				3A9060E72937DD48003648F6 /* Preview Content */,
-				3A360C67293F225D0054EED9 /* ColorStyle.swift */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
