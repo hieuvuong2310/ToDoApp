@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C67293F225D0054EED9 /* ColorStyle.swift */; };
 		3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F142938393A002EEE92 /* ToDoService.swift */; };
 		3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */; };
 		3A4C5FAB293A88B5002EEE92 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FAA293A88B5002EEE92 /* CreateTaskViewModel.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A360C67293F225D0054EED9 /* ColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyle.swift; sourceTree = "<group>"; };
 		3A4C5F142938393A002EEE92 /* ToDoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoService.swift; sourceTree = "<group>"; };
 		3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
 		3A4C5FAA293A88B5002EEE92 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				3A9060E12937DD47003648F6 /* ToDoAppApp.swift */,
 				3A9060E52937DD48003648F6 /* Assets.xcassets */,
 				3A9060E72937DD48003648F6 /* Preview Content */,
+				3A360C67293F225D0054EED9 /* ColorStyle.swift */,
 			);
 			path = ToDoApp;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */,
 				3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */,
 				3A4C5FAB293A88B5002EEE92 /* CreateTaskViewModel.swift in Sources */,
+				3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

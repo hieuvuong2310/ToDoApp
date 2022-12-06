@@ -18,14 +18,14 @@ struct CreateTaskView: View {
             VStack(alignment: .leading, spacing: 21) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Task Name")
-                        .foregroundColor(Color("primaryText"))
+                        .foregroundColor(Color(ColorStyle.primaryText))
                     TextField("Insert Title", text: $titleInput)
                         .padding(.horizontal, 16.0)
                         .textInputAutocapitalization(.words)
                         .frame(minHeight: 44)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color("secondaryAccent"), lineWidth: 1)
+                                .stroke(Color(ColorStyle.secondaryAccent), lineWidth: 1)
                         )
                         .introspectTextField(customize: {
                                 $0.clearButtonMode = .whileEditing
@@ -34,18 +34,18 @@ struct CreateTaskView: View {
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
-                        .foregroundColor(Color("primaryText"))
+                        .foregroundColor(Color(ColorStyle.primaryText))
                     DatePicker(selection: $date) {
                         Text("Select date")
-                            .foregroundColor(Color("primaryText"))
+                            .foregroundColor(Color(ColorStyle.primaryText))
                     }
                     .padding(.horizontal, 16.0)
                     .frame(minHeight: 44)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color("secondaryAccent"), lineWidth: 1)
+                            .stroke(Color(ColorStyle.secondaryAccent), lineWidth: 1)
                     )
-                    .tint(Color("secondaryAccent"))
+                    .tint(Color(ColorStyle.secondaryAccent))
                 }
                 Spacer()
             }
@@ -65,7 +65,7 @@ struct CreateTaskView: View {
                     }
                 }
             }
-            .foregroundColor(Color("primaryAccent"))
+            .foregroundColor(Color(ColorStyle.primaryAccent))
         }
     }
 }
