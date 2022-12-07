@@ -31,7 +31,6 @@ struct CreateTaskView: View {
                                 $0.clearButtonMode = .whileEditing
                         })
                     }
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
                         .foregroundColor(Color(.primaryText))
@@ -66,6 +65,12 @@ struct CreateTaskView: View {
                 }
             }
             .foregroundColor(Color(.primaryAccent))
+            .alert(item: $createTaskViewModel.error, content: { error in
+                switch error {
+                case .invalidTitle:
+                    return Alert(title: Text("Error"), message: Text("Title cannot be left empty."))
+                }
+            })
         }
     }
 }
