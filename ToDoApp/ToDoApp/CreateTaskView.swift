@@ -61,19 +61,18 @@ struct CreateTaskView: View {
                     Text("Create New Task").bold()
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {}
-                        .task{
-                        let result = try? await createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date).get()
-                        openAlert = result == false ? result!: true
+                    Button("Save") {
+                        createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
                     }
                 }
             }
             .foregroundColor(Color(.primaryAccent))
-            .alert("Error", isPresented: $openAlert, actions: {
-               Button("Cancel", role: .cancel, action: {
-                  openAlert = false
-               })
-            }, message: { Text("Title cannot be left empty.") })
+            .alert(item: $createTaskViewModel.error, content: {error in
+                switch error {
+                case .invalidTitle:
+                    return Alert(title: Text("Error"), message: Text("Title cannot be left empty."))
+                }
+            })
         }
     }
 }

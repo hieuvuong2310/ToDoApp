@@ -7,13 +7,17 @@
 
 import Foundation
 
-enum InputErrors: Error{
-    case InvalidTitle
+enum InputErrors: Identifiable, Hashable{
+    case invalidTitle
+    
+    var id: Int {
+        hashValue
+    }
 }
 
 class CreateTaskViewModel: ObservableObject {
     
-    @Published var loadedTask: Bool = true
+    @Published var error: InputErrors?
     
     private let taskService: ToDoService
     
@@ -23,18 +27,18 @@ class CreateTaskViewModel: ObservableObject {
     convenience init(){
         self.init(taskService: FeaturesToDo())
     }
-    
     func onCancelButtonTapped() {
         print("Cancelled")
     }
-    func onSaveButtonTapped(inputTitle: String, date: Date) async -> Result<Bool, InputErrors>{
+    func onSaveButtonTapped(inputTitle: String, date: Date) {
         //Check whether the input is correct or not.
         if inputTitle == ""{
-            self.loadedTask = false;
-            print("A")
-            return .failure(InputErrors.InvalidTitle)
+            error = .invalidTitle
         }
-        let result = await taskService.createTask(title: inputTitle, deadline: date)
-        return .success(true)
+        else {
+            Task{
+                await taskService.createTask(title: inputTitle, deadline: date)
+            }
+        }
     }
 }

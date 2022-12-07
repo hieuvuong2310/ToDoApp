@@ -11,7 +11,7 @@ enum TaskError: Error {
     case unavailableTask
 }
 
-struct Task {
+struct TaskModel {
     let id: UUID = UUID()
     var title: String
     var deadline: Date
@@ -25,14 +25,14 @@ protocol DateChecker {
 extension Calendar: DateChecker {}
 
 protocol ToDoService {
-    func createTask(title: String, deadline: Date) async -> Result<Task, TaskError>
-    func updateTask(todo: Task) async -> Result<Task, TaskError>
-    func taskForToday() async -> Result<[Task], TaskError>
+    func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError>
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError>
+    func taskForToday() async -> Result<[TaskModel], TaskError>
 }
 
 final class FeaturesToDo: ToDoService {
     // Private properties
-    private var tasks: [Task] = []
+    private var tasks: [TaskModel] = []
     // MARK: - Dependencies
     private let dateChecker: DateChecker
     // MARK: - Init
@@ -43,13 +43,13 @@ final class FeaturesToDo: ToDoService {
         self.init(dateChecker: Calendar.current)
     }
     // Create a task
-    func createTask(title: String, deadline: Date) async -> Result<Task, TaskError> {
-        let oneTask = Task(title: title, deadline: deadline)
+    func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError> {
+        let oneTask = TaskModel(title: title, deadline: deadline)
         tasks.append(oneTask)
         return Result.success(oneTask)
     }
     // Update the task
-    func updateTask(todo: Task) async -> Result<Task, TaskError> {
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError> {
         guard let index = tasks.firstIndex(where: {
             $0.id == todo.id
         })else {
@@ -59,7 +59,7 @@ final class FeaturesToDo: ToDoService {
         return Result.success(todo)
     }
     // Get list of tasks for today
-    func taskForToday() async -> Result<[Task], TaskError> {
+    func taskForToday() async -> Result<[TaskModel], TaskError> {
         let todayTasks = tasks.filter {
             return dateChecker.isDateInToday($0.deadline)
         }
