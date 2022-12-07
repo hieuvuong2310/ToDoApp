@@ -7,36 +7,31 @@
 
 import Foundation
 
-enum InputErrors: Identifiable, Hashable{
+enum InputErrors: Identifiable, Hashable {
     case invalidTitle
-    
     var id: Int {
         hashValue
     }
 }
 
 class CreateTaskViewModel: ObservableObject {
-    
     @Published var error: InputErrors?
-    
     private let taskService: ToDoService
-    
-    init(taskService: ToDoService){
+    init(taskService: ToDoService) {
         self.taskService = taskService
     }
-    convenience init(){
+    convenience init() {
         self.init(taskService: FeaturesToDo())
     }
     func onCancelButtonTapped() {
         print("Cancelled")
     }
     func onSaveButtonTapped(inputTitle: String, date: Date) {
-        //Check whether the input is correct or not.
+        // Check whether the input is correct or not.
         if inputTitle == ""{
             error = .invalidTitle
-        }
-        else {
-            Task{
+        } else {
+            Task {
                 await taskService.createTask(title: inputTitle, deadline: date)
             }
         }

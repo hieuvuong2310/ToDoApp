@@ -13,7 +13,6 @@ struct CreateTaskView: View {
     @StateObject private var createTaskViewModel = CreateTaskViewModel()
     @State var titleInput: String = ""
     @State var date: Date = Date()
-    @State var openAlert: Bool = false
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
@@ -32,7 +31,6 @@ struct CreateTaskView: View {
                                 $0.clearButtonMode = .whileEditing
                         })
                     }
-                
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
                         .foregroundColor(Color(.primaryText))
@@ -67,7 +65,7 @@ struct CreateTaskView: View {
                 }
             }
             .foregroundColor(Color(.primaryAccent))
-            .alert(item: $createTaskViewModel.error, content: {error in
+            .alert(item: $createTaskViewModel.error, content: { error in
                 switch error {
                 case .invalidTitle:
                     return Alert(title: Text("Error"), message: Text("Title cannot be left empty."))
