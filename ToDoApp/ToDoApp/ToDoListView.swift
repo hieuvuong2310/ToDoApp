@@ -45,7 +45,6 @@ struct ToDoListView: View {
                     ForEach(tasks.toDoItems) { todo in
                         CellTask(todo: todo)
                     }
-                    
                 }
             }
             Spacer()
@@ -67,7 +66,7 @@ struct ToDoListView: View {
     }
 }
 struct CellTask: View {
-    let todo: TaskModel
+    var todo: TaskModel
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -75,6 +74,7 @@ struct CellTask: View {
                     ToDoViewModel(todo: todo).updateStatus()
                     }, label: {
                         Image(systemName: (ToDoViewModel(todo: todo).getStatus() ? "checkmark.circle" : "circle"))
+                            .frame(minWidth: 22, minHeight: 22)
                             .clipShape(Circle())
                             .tint(.blue)
                     }
@@ -85,7 +85,7 @@ struct CellTask: View {
                         .bold()
                         .font(.system(size: 17))
                     Text(formatDate(deadline: todo.deadline))
-
+                        .font(.system(size: 15))
                 }
             }
             Divider()
