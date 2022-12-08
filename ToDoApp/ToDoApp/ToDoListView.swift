@@ -48,19 +48,6 @@ struct ToDoListView: View {
                 }
             }
             Spacer()
-            Button( action: {
-                showSheet.toggle()
-                }, label: {
-                    Image(systemName: "plus")
-                        .frame(minWidth: 57, minHeight: 57)
-                        .foregroundColor(.white)
-                        .background(Color(.primaryButton))
-                        .clipShape(Circle())
-                }
-            )
-            .sheet(isPresented: $showSheet) {
-                CreateTaskView()
-            }
         }
         .padding(16)
     }
@@ -71,9 +58,9 @@ struct CellTask: View {
         VStack(alignment: .leading) {
             HStack {
                 Button( action: {
-                    ToDoViewModel(todo: todo).updateStatus()
-                    }, label: {
-                        Image(systemName: (ToDoViewModel(todo: todo).getStatus() ? "checkmark.circle" : "circle"))
+                    print("Change status")
+                }, label: {
+                        Image(systemName: (todo.status ? "checkmark.circle" : "circle"))
                             .frame(minWidth: 22, minHeight: 22)
                             .clipShape(Circle())
                             .tint(.blue)
