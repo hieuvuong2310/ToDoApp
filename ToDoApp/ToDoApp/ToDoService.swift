@@ -11,7 +11,7 @@ enum TaskError: Error {
     case unavailableTask
 }
 
-struct TaskModel {
+struct TaskModel: Identifiable {
     let id: UUID = UUID()
     var title: String
     var deadline: Date

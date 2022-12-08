@@ -13,6 +13,7 @@ enum ColorStyle: String {
     case secondaryAccent
     case primaryText
     case primaryButton
+    case caption
 }
 
 extension Color {
