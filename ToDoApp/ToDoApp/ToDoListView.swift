@@ -59,6 +59,8 @@ struct ToDoListView: View {
                 Spacer()
             }
             .navigationTitle("To-Do List")
+            .listStyle(.plain)
+            .padding(.leading, 16)
         }
     }
 }
@@ -66,17 +68,16 @@ struct CellTask: View {
     var todo: TaskModel
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
+            HStack(spacing: 30) {
                 Button( action: {
                     print("Change status")
                 }, label: {
                         Image(systemName: (todo.status ? "checkmark.circle" : "circle"))
-                            .frame(minWidth: 22, minHeight: 22)
+                            .frame(minHeight: 22)
                             .clipShape(Circle())
-                            .tint(.blue)
+                            .foregroundColor(.blue)
                     }
                 )
-                .padding(.trailing, 30.0)
                 VStack(alignment: .leading) {
                     Text(todo.title)
                         .bold()
