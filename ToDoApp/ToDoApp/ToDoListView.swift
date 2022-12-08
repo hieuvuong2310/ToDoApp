@@ -13,23 +13,34 @@ struct ToDoSection: Identifiable {
     let toDoItems: [TaskModel]
 }
 struct ToDoListView: View {
-    @State var showSheet: Bool = false
     static let items: [ToDoSection] = [
             .init(title: "Today’s To-Do List", toDoItems: [
                 .init(title: "Cleaning", deadline: Date(), status: false),
-                .init(title: "Cooking", deadline: Date(), status: true)
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: false),
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Cooking", deadline: Date(), status: false)
+                
             ]),
             .init(title: "All To-Do List", toDoItems: [
+                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Laundry", deadline: Date(), status: true),
+                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Laundry", deadline: Date(), status: true),
+                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Laundry", deadline: Date(), status: false),
                 .init(title: "Laundry", deadline: Date(), status: false),
                 .init(title: "Painting", deadline: Date(), status: true)
             ])
         ]
     var body: some View {
-        VStack(alignment: .trailing) {
-            VStack(alignment: .leading) {
-                Text("To-Do List")
-                    .font(.system(size: 34))
-                    .bold()
+        NavigationStack{
+            List {
                 ForEach(ToDoListView.items) { tasks in
                     HStack(spacing: 6) {
                         Text(tasks.title)
@@ -41,15 +52,14 @@ struct ToDoListView: View {
                             .font(.system(size: 12))
                             .fontWeight(.thin)
                     }
-                    Divider()
                     ForEach(tasks.toDoItems) { todo in
                         CellTask(todo: todo)
                     }
                 }
+                Spacer()
             }
-            Spacer()
+            .navigationTitle("To-Do List")
         }
-        .padding(16)
     }
 }
 struct CellTask: View {
@@ -75,7 +85,6 @@ struct CellTask: View {
                         .font(.system(size: 15))
                 }
             }
-            Divider()
         }
     }
     func formatDate(deadline: Date) -> String {
