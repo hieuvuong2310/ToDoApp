@@ -45,14 +45,14 @@ struct ToDoListView: View {
                     HStack(spacing: 6) {
                         Text(tasks.title)
                             .foregroundColor(Color(.caption))
-                            .font(.caption)
                             .fontWeight(.medium)
                         Text("\(tasks.toDoItems.count) tasks left")
                             .foregroundColor(Color(.secondaryText))
-                            .font(.caption)
+                            
                     }
+                    .font(.caption)
                     ForEach(tasks.toDoItems) { todo in
-                        CellTask(todo: todo)
+                        TaskCell(todo: todo)
                     }
                 }
             }
@@ -61,7 +61,7 @@ struct ToDoListView: View {
         }
     }
 }
-struct CellTask: View {
+struct TaskCell: View {
     var todo: TaskModel
     var body: some View {
         HStack(spacing: 30) {
@@ -82,7 +82,7 @@ struct CellTask: View {
         }
     }
     func formatDate(deadline: Date) -> String {
-        return deadline.formatted(.dateTime.day().month().year().hour().minute())
+        return deadline.formatted()
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
