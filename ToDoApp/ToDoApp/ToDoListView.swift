@@ -18,8 +18,8 @@ struct ToDoListView: View {
         NavigationStack{
             Group {
                 switch viewModel.state {
-                    case .idle:
-                        EmptyView()
+                case .idle:
+                    EmptyView()
                 case .loading:
                     ProgressView()
                 case .failed(let error):
@@ -33,7 +33,6 @@ struct ToDoListView: View {
                                     .fontWeight(.medium)
                                 Text("\(tasks.toDoItems.count) tasks left")
                                     .foregroundColor(Color(.secondaryText))
-                                    
                             }
                             .font(.caption)
                             ForEach(tasks.toDoItems) { todo in
@@ -58,9 +57,9 @@ struct TaskCell: View {
             Button( action: {
                 print("Change status")
             }, label: {
-                    Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
+                Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
                     .foregroundColor(Color(.checkmarkButton))
-                }
+            }
             )
             VStack(alignment: .leading) {
                 Text(todo.title)

@@ -42,11 +42,11 @@ final class FeaturesToDo: ToDoService {
         .init(title: "Painting", deadline: Date(), status: true),
         .init(title: "Learning", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
         .init(title: "Midterm", deadline: Date(), status: true),
-        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1670128119), status: false),
+        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
         .init(title: "Clean car", deadline: Date(), status: true),
         .init(title: "Workout", deadline: Date(), status: true),
         .init(title: "Cooking", deadline: Date(), status: false),
-        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1636600477), status: false),
+        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
         .init(title: "Clean car", deadline: Date(), status: true),
         .init(title: "Workout", deadline: Date(), status: true),
         .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false)

@@ -15,9 +15,18 @@ final class ToDoListViewModel: ObservableObject {
         case failed(Error)
     }
     @Published var state: State = .idle
-    private let taskService: ToDoService = FeaturesToDo()
+    private let taskService: ToDoService
+    init(taskService: ToDoService) {
+        self.taskService = taskService
+    }
+    convenience init() {
+        self.init(taskService: FeaturesToDo())
+    }
     func onAppear() {
         if case .loaded = state {
+            return
+        }
+        if case .loading = state {
             return
         }
         state = .loading
@@ -27,10 +36,10 @@ final class ToDoListViewModel: ObservableObject {
             case .success(let todos):
                 var todoSections: [ToDoSection] = []
                 if !todos.today.isEmpty {
-                    todoSections.append(ToDoSection(title: "Today’s To-Do List", toDoItems: todos.today))
+                    todoSections.append(ToDoSection(title: NSLocalizedString("Today’s To-Do List", comment: "today tasks section title"), toDoItems: todos.today))
                 }
                 if !todos.other.isEmpty {
-                    todoSections.append(ToDoSection(title: "All To-Do List", toDoItems: todos.other))
+                    todoSections.append(ToDoSection(title: NSLocalizedString("All To-Do List", comment: "other tasks section title"), toDoItems: todos.other))
                 }
                 state = .loaded(todoSections)
             case .failure(let error):
