@@ -45,51 +45,43 @@ struct ToDoListView: View {
                     HStack(spacing: 6) {
                         Text(tasks.title)
                             .foregroundColor(Color(.caption))
-                            .font(.system(size: 12))
+                            .font(.caption)
                             .fontWeight(.medium)
-                        Text("\(tasks.toDoItems.capacity) tasks left")
-                            .foregroundColor(.gray)
-                            .font(.system(size: 12))
-                            .fontWeight(.thin)
+                        Text("\(tasks.toDoItems.count) tasks left")
+                            .foregroundColor(Color(.secondaryText))
+                            .font(.caption)
                     }
                     ForEach(tasks.toDoItems) { todo in
                         CellTask(todo: todo)
                     }
                 }
-                Spacer()
             }
             .navigationTitle("To-Do List")
             .listStyle(.plain)
-            .padding(.leading, 16)
         }
     }
 }
 struct CellTask: View {
     var todo: TaskModel
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack(spacing: 30) {
-                Button( action: {
-                    print("Change status")
-                }, label: {
-                        Image(systemName: (todo.status ? "checkmark.circle" : "circle"))
-                            .frame(minHeight: 22)
-                            .clipShape(Circle())
-                            .foregroundColor(.blue)
-                    }
-                )
-                VStack(alignment: .leading) {
-                    Text(todo.title)
-                        .bold()
-                        .font(.system(size: 17))
-                    Text(formatDate(deadline: todo.deadline))
-                        .font(.system(size: 15))
+        HStack(spacing: 30) {
+            Button( action: {
+                print("Change status")
+            }, label: {
+                    Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
+                    .foregroundColor(Color(.checkmarkButton))
                 }
+            )
+            VStack(alignment: .leading) {
+                Text(todo.title)
+                    .bold()
+                Text(formatDate(deadline: todo.deadline))
+                    .font(.system(size: 15))
             }
         }
     }
     func formatDate(deadline: Date) -> String {
-        return deadline.formatted(.iso8601.month().day().year().dateSeparator(.dash))
+        return deadline.formatted(.dateTime.day().month().year())
     }
 }
 struct ToDoListView_Previews: PreviewProvider {

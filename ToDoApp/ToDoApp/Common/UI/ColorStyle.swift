@@ -14,6 +14,8 @@ enum ColorStyle: String {
     case primaryText
     case primaryButton
     case caption
+    case secondaryText
+    case checkmarkButton
 }
 
 extension Color {
