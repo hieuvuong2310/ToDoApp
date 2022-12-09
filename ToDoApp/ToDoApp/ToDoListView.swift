@@ -17,24 +17,24 @@ struct ToDoListView: View {
             .init(title: "Today’s To-Do List", toDoItems: [
                 .init(title: "Cleaning", deadline: Date(), status: false),
                 .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: false),
-                .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: true),
+                .init(title: "Painting", deadline: Date(), status: true),
+                .init(title: "Learning", deadline: Date(), status: true),
+                .init(title: "Midterm", deadline: Date(), status: true),
+                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Clean car", deadline: Date(), status: true),
+                .init(title: "Workout", deadline: Date(), status: true),
                 .init(title: "Cooking", deadline: Date(), status: false)
                 
             ]),
             .init(title: "All To-Do List", toDoItems: [
                 .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: true),
+                .init(title: "Cleaning", deadline: Date(), status: true),
+                .init(title: "Final", deadline: Date(), status: false),
+                .init(title: "Grocery", deadline: Date(), status: true),
+                .init(title: "Dancing", deadline: Date(), status: false),
+                .init(title: "Workout", deadline: Date(), status: false),
                 .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: true),
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: false),
+                .init(title: "Drawing", deadline: Date(), status: false),
                 .init(title: "Painting", deadline: Date(), status: true)
             ])
         ]
@@ -75,13 +75,14 @@ struct CellTask: View {
             VStack(alignment: .leading) {
                 Text(todo.title)
                     .bold()
+                    .font(.body)
                 Text(formatDate(deadline: todo.deadline))
-                    .font(.system(size: 15))
+                    .font(.subheadline)
             }
         }
     }
     func formatDate(deadline: Date) -> String {
-        return deadline.formatted(.dateTime.day().month().year())
+        return deadline.formatted(.dateTime.day().month().year().hour().minute())
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
