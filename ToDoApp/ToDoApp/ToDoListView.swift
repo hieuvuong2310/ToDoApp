@@ -72,7 +72,7 @@ struct TaskCell: View {
         }
     }
     func formatDate(deadline: Date) -> String {
-        return deadline.formatted()
+        return deadline.formatted(date: .abbreviated, time: .shortened)
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
