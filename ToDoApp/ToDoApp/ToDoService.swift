@@ -18,6 +18,10 @@ struct TaskModel: Identifiable {
     var status: Bool = false
 }
 
+struct ToDoTasks {
+    var today: [TaskModel]
+    var other: [TaskModel]
+}
 protocol DateChecker {
     func isDateInToday(_ date: Date) -> Bool
 }
@@ -27,12 +31,26 @@ extension Calendar: DateChecker {}
 protocol ToDoService {
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError>
     func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError>
-    func taskForToday() async -> Result<[TaskModel], TaskError>
+    func getTasks() async -> Result<ToDoTasks, TaskError>
 }
 
 final class FeaturesToDo: ToDoService {
     // Private properties
-    private var tasks: [TaskModel] = []
+    private var tasks: [TaskModel] = [
+        .init(title: "Cleaning", deadline: Date(), status: false),
+        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
+        .init(title: "Painting", deadline: Date(), status: true),
+        .init(title: "Learning", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
+        .init(title: "Midterm", deadline: Date(), status: true),
+        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(title: "Clean car", deadline: Date(), status: true),
+        .init(title: "Workout", deadline: Date(), status: true),
+        .init(title: "Cooking", deadline: Date(), status: false),
+        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(title: "Clean car", deadline: Date(), status: true),
+        .init(title: "Workout", deadline: Date(), status: true),
+        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
+    ]
     // MARK: - Dependencies
     private let dateChecker: DateChecker
     // MARK: - Init
@@ -46,23 +64,29 @@ final class FeaturesToDo: ToDoService {
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError> {
         let oneTask = TaskModel(title: title, deadline: deadline)
         tasks.append(oneTask)
-        return Result.success(oneTask)
+        return .success(oneTask)
     }
     // Update the task
     func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError> {
         guard let index = tasks.firstIndex(where: {
             $0.id == todo.id
         })else {
-            return Result.failure(TaskError.unavailableTask)
+            return .failure(TaskError.unavailableTask)
         }
         tasks[index] = todo
-        return Result.success(todo)
+        return .success(todo)
     }
-    // Get list of tasks for today
-    func taskForToday() async -> Result<[TaskModel], TaskError> {
-        let todayTasks = tasks.filter {
-            return dateChecker.isDateInToday($0.deadline)
+    // Get all the tasks in the storage and put them into correct buckets
+    func getTasks() async -> Result<ToDoTasks, TaskError> {
+        var today: [TaskModel] = []
+        var other: [TaskModel] = []
+        for task in tasks.sorted(by: { $0.deadline < $1.deadline }) {
+            if dateChecker.isDateInToday(task.deadline) {
+                today.append(task)
+            } else {
+                other.append(task)
+            }
         }
-        return Result.success(todayTasks)
+        return .success(ToDoTasks(today: today, other: other))
     }
 }

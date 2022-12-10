@@ -13,51 +13,40 @@ struct ToDoSection: Identifiable {
     let toDoItems: [TaskModel]
 }
 struct ToDoListView: View {
-    static let items: [ToDoSection] = [
-            .init(title: "Today’s To-Do List", toDoItems: [
-                .init(title: "Cleaning", deadline: Date(), status: false),
-                .init(title: "Cooking", deadline: Date(), status: true),
-                .init(title: "Painting", deadline: Date(), status: true),
-                .init(title: "Learning", deadline: Date(), status: true),
-                .init(title: "Midterm", deadline: Date(), status: true),
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Clean car", deadline: Date(), status: true),
-                .init(title: "Workout", deadline: Date(), status: true),
-                .init(title: "Cooking", deadline: Date(), status: false)
-                
-            ]),
-            .init(title: "All To-Do List", toDoItems: [
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Cleaning", deadline: Date(), status: true),
-                .init(title: "Final", deadline: Date(), status: false),
-                .init(title: "Grocery", deadline: Date(), status: true),
-                .init(title: "Dancing", deadline: Date(), status: false),
-                .init(title: "Workout", deadline: Date(), status: false),
-                .init(title: "Laundry", deadline: Date(), status: false),
-                .init(title: "Drawing", deadline: Date(), status: false),
-                .init(title: "Painting", deadline: Date(), status: true)
-            ])
-        ]
+    @StateObject var viewModel = ToDoListViewModel()
     var body: some View {
         NavigationStack{
-            List {
-                ForEach(ToDoListView.items) { tasks in
-                    HStack(spacing: 6) {
-                        Text(tasks.title)
-                            .foregroundColor(Color(.caption))
-                            .fontWeight(.medium)
-                        Text("\(tasks.toDoItems.count) tasks left")
-                            .foregroundColor(Color(.secondaryText))
-                            
+            Group {
+                switch viewModel.state {
+                case .idle:
+                    EmptyView()
+                case .loading:
+                    ProgressView()
+                case .failed(let error):
+                    Text(error.localizedDescription)
+                case .loaded(let sections):
+                    List {
+                        ForEach(sections) { tasks in
+                            HStack(spacing: 6) {
+                                Text(tasks.title)
+                                    .foregroundColor(Color(.caption))
+                                    .fontWeight(.medium)
+                                Text("\(tasks.toDoItems.count) tasks left")
+                                    .foregroundColor(Color(.secondaryText))
+                            }
+                            .font(.caption)
+                            ForEach(tasks.toDoItems) { todo in
+                                TaskCell(todo: todo)
+                            }
+                        }
                     }
-                    .font(.caption)
-                    ForEach(tasks.toDoItems) { todo in
-                        TaskCell(todo: todo)
-                    }
+                    .listStyle(.plain)
                 }
             }
             .navigationTitle("To-Do List")
-            .listStyle(.plain)
+        }
+        .onAppear {
+            viewModel.onAppear()
         }
     }
 }
@@ -68,9 +57,9 @@ struct TaskCell: View {
             Button( action: {
                 print("Change status")
             }, label: {
-                    Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
+                Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
                     .foregroundColor(Color(.checkmarkButton))
-                }
+            }
             )
             VStack(alignment: .leading) {
                 Text(todo.title)
@@ -82,7 +71,7 @@ struct TaskCell: View {
         }
     }
     func formatDate(deadline: Date) -> String {
-        return deadline.formatted()
+        return deadline.formatted(date: .abbreviated, time: .shortened)
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
