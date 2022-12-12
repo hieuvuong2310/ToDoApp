@@ -14,6 +14,13 @@ final class ToDoListViewModel: ObservableObject {
         case loaded([ToDoSection])
         case failed(Error)
     }
+    enum Destination: Identifiable {
+        var id: String {
+            return "id"
+        }
+        case addTask(CreateTaskViewModel)
+    }
+    @Published var destination: Destination?
     @Published var state: State = .idle
     private let taskService: ToDoService
     init(taskService: ToDoService) {
@@ -46,5 +53,14 @@ final class ToDoListViewModel: ObservableObject {
                 state = .failed(error)
             }
         }
+    }
+    // Tap add button
+    func addButtonTapped() {
+        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel()
+        destination = .addTask(createTaskViewModel)
+    }
+    // Reload the state when navigate to ToDoListView
+    func reload() {
+        state = .idle
     }
 }

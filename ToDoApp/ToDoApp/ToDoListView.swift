@@ -13,10 +13,10 @@ struct ToDoSection: Identifiable {
     let toDoItems: [TaskModel]
 }
 struct ToDoListView: View {
-    @StateObject var viewModel = ToDoListViewModel()
+    @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
     var body: some View {
-        NavigationStack{
-            Group {
+        NavigationStack {
+            VStack(alignment: .trailing) {
                 switch viewModel.state {
                 case .idle:
                     EmptyView()
@@ -41,11 +41,31 @@ struct ToDoListView: View {
                         }
                     }
                     .listStyle(.plain)
+                    Button( action: {
+                        viewModel.addButtonTapped()
+                    }, label: {
+                        Image(systemName: "plus")
+                            .frame(minWidth: 57, minHeight: 57)
+                            .foregroundColor(.white)
+                            .background(Color(.primaryButton))
+                            .clipShape(Circle())
+                    }
+                    )
+                    .sheet(item: $viewModel.destination, onDismiss: {
+                        viewModel.reload()
+                        viewModel.onAppear()
+                    }) { destination in
+                        switch destination {
+                        case .addTask(let viewModel):
+                            CreateTaskView(viewModel: viewModel)
+                        }
+                    }
+                    .padding(min(10, 20))
                 }
             }
             .navigationTitle("To-Do List")
         }
-        .onAppear {
+        .onAppear() {
             viewModel.onAppear()
         }
     }

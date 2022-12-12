@@ -10,9 +10,14 @@ import SwiftUI
 import Introspect
 
 struct CreateTaskView: View {
-    @StateObject private var createTaskViewModel = CreateTaskViewModel()
+    @ObservedObject private var createTaskViewModel: CreateTaskViewModel
+    @Environment(\.presentationMode) private var presentationMode
     @State var titleInput: String = ""
     @State var date: Date = Date()
+    var showSheet: Bool = false
+    init(viewModel: CreateTaskViewModel) {
+        self.createTaskViewModel = viewModel
+    }
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading, spacing: 21) {
@@ -52,7 +57,10 @@ struct CreateTaskView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        createTaskViewModel.onCancelButtonTapped()
+                        let defaultValue = createTaskViewModel.onCancelButtonTapped()
+                        titleInput = defaultValue.titleInput
+                        date = defaultValue.date
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
                 ToolbarItem(placement: .principal) {
@@ -61,6 +69,7 @@ struct CreateTaskView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
                         createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
+                        presentationMode.wrappedValue.dismiss()
                     }
                 }
             }
@@ -76,7 +85,7 @@ struct CreateTaskView: View {
 }
 
 struct CreateTaskView_Previews: PreviewProvider {
-   static var previews: some View {
-      CreateTaskView()
-   }
+    static var previews: some View {
+        CreateTaskView(viewModel: CreateTaskViewModel())
+    }
 }
