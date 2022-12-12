@@ -16,7 +16,7 @@ struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
     var body: some View {
         NavigationStack {
-            VStack(alignment: .trailing) {
+            ZStack(alignment: .bottomTrailing) {
                 switch viewModel.state {
                 case .idle:
                     EmptyView()

@@ -26,10 +26,6 @@ class CreateTaskViewModel: ObservableObject {
     convenience init() {
         self.init(taskService: FeaturesToDo())
     }
-    // Handle when "Cancelled" button is tapped
-    func onCancelButtonTapped() -> DefaultValue{
-        return DefaultValue(titleInput: "", date: Date())
-    }
     // Handle when "Save" button is tapped
     func onSaveButtonTapped(inputTitle: String, date: Date) {
         // Check whether the input is correct or not.

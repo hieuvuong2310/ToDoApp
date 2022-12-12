@@ -14,7 +14,6 @@ struct CreateTaskView: View {
     @Environment(\.presentationMode) private var presentationMode
     @State var titleInput: String = ""
     @State var date: Date = Date()
-    var showSheet: Bool = false
     init(viewModel: CreateTaskViewModel) {
         self.createTaskViewModel = viewModel
     }
@@ -57,9 +56,6 @@ struct CreateTaskView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        let defaultValue = createTaskViewModel.onCancelButtonTapped()
-                        titleInput = defaultValue.titleInput
-                        date = defaultValue.date
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
