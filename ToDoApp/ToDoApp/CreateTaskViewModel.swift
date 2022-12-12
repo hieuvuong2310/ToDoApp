@@ -13,10 +13,6 @@ enum InputErrors: Identifiable, Hashable {
         hashValue
     }
 }
-struct DefaultValue {
-    var titleInput: String
-    var date: Date
-}
 class CreateTaskViewModel: ObservableObject {
     @Published var error: InputErrors?
     private let taskService: ToDoService

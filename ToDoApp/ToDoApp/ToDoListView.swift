@@ -14,6 +14,7 @@ struct ToDoSection: Identifiable {
 }
 struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
+    @State var showButton: Bool = true
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
@@ -41,6 +42,11 @@ struct ToDoListView: View {
                         }
                     }
                     .listStyle(.plain)
+                    .onTapGesture {
+                        showButton.toggle()
+                    }
+                }
+                if showButton {
                     Button( action: {
                         viewModel.addButtonTapped()
                     }, label: {
@@ -60,7 +66,6 @@ struct ToDoListView: View {
                             CreateTaskView(viewModel: viewModel)
                         }
                     }
-                    .padding(min(10, 20))
                 }
             }
             .navigationTitle("To-Do List")
