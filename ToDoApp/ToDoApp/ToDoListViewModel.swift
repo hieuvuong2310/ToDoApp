@@ -43,10 +43,15 @@ final class ToDoListViewModel: ObservableObject {
             case .success(let todos):
                 var todoSections: [ToDoSection] = []
                 if !todos.today.isEmpty {
-                    todoSections.append(ToDoSection(title: NSLocalizedString("Today’s To-Do List", comment: "today tasks section title"), toDoItems: todos.today))
+                    todoSections.append(
+                        ToDoSection(title: NSLocalizedString("Today’s To-Do List",
+                                                             comment: "today tasks section title"),
+                                    toDoItems: todos.today))
                 }
                 if !todos.other.isEmpty {
-                    todoSections.append(ToDoSection(title: NSLocalizedString("All To-Do List", comment: "other tasks section title"), toDoItems: todos.other))
+                    todoSections.append(
+                        ToDoSection(title: NSLocalizedString("All To-Do List", comment: "other tasks section title"),
+                                    toDoItems: todos.other))
                 }
                 state = .loaded(todoSections)
             case .failure(let error):

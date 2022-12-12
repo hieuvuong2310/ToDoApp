@@ -14,6 +14,7 @@ struct ToDoSection: Identifiable {
 }
 struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
+    var addButttonSize: Double = 57.0
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
@@ -41,20 +42,19 @@ struct ToDoListView: View {
                         }
                     }
                     .listStyle(.plain)
-                    .padding(.bottom, 57)
+                    .padding(.bottom, addButttonSize)
                 }
                 Button( action: {
                     viewModel.addButtonTapped()
                 }, label: {
                     Image(systemName: "plus")
-                        .frame(minWidth: 57, minHeight: 57)
+                        .frame(minWidth: addButttonSize, minHeight: addButttonSize)
                         .foregroundColor(.white)
                         .background(Color(.primaryButton))
                         .clipShape(Circle())
                 }
                 )
-                .sheet(item: $viewModel.destination, onDismiss: {
-                    viewModel.reload()
+                .sheet(item: $viewModel.destination, onDismiss: { viewModel.reload()
                     viewModel.onAppear()
                 }) { destination in
                     switch destination {
@@ -65,7 +65,7 @@ struct ToDoListView: View {
             }
             .navigationTitle("To-Do List")
         }
-        .onAppear() {
+        .onAppear {
             viewModel.onAppear()
         }
     }
