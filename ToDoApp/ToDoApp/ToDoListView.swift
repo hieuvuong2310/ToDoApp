@@ -14,7 +14,7 @@ struct ToDoSection: Identifiable {
 }
 struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
-    var addButttonSize: Double = 57.0
+    let addButttonSize = Constants.addButtonSize
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
@@ -92,6 +92,11 @@ struct TaskCell: View {
     }
     func formatDate(deadline: Date) -> String {
         return deadline.formatted(date: .abbreviated, time: .shortened)
+    }
+}
+private extension ToDoListView {
+    enum Constants {
+        static let addButtonSize: CGFloat = 57
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
