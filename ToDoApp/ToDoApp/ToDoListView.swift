@@ -14,7 +14,6 @@ struct ToDoSection: Identifiable {
 }
 struct ToDoListView: View {
     @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
-    let addButttonSize = Constants.addButtonSize
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
