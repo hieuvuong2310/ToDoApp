@@ -40,20 +40,22 @@ struct ToDoListView: View {
                                 TaskCell(todo: todo)
                             }
                         }
+                        Color.clear
+                            .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
                     }
                     .listStyle(.plain)
-                    .padding(.bottom, addButttonSize)
                 }
                 Button( action: {
                     viewModel.addButtonTapped()
                 }, label: {
                     Image(systemName: "plus")
-                        .frame(minWidth: addButttonSize, minHeight: addButttonSize)
+                        .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
                         .foregroundColor(.white)
                         .background(Color(.primaryButton))
                         .clipShape(Circle())
                 }
                 )
+                .padding(.trailing, 17)
                 .sheet(item: $viewModel.destination, onDismiss: { viewModel.reload()
                     viewModel.onAppear()
                 }) { destination in

@@ -46,7 +46,7 @@ final class FeaturesToDo: ToDoService {
         .init(title: "Clean car", deadline: Date(), status: true),
         .init(title: "Workout", deadline: Date(), status: true),
         .init(title: "Cooking", deadline: Date(), status: false),
-        .init(title: "Final", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(title: "Final for Introduction to Computer Theory and Processing, Algorithms", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
         .init(title: "Clean car", deadline: Date(), status: true),
         .init(title: "Workout", deadline: Date(), status: true),
         .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
