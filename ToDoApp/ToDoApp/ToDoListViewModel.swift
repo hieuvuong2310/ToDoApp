@@ -26,7 +26,7 @@ final class ToDoListViewModel: ObservableObject {
     }
     @Published private(set) var destination: Destination?
     @Published private(set) var state: State = .idle
-    private let taskService: ToDoService
+    @Published private(set) var taskService: ToDoService
     init(taskService: ToDoService) {
         self.taskService = taskService
     }
@@ -79,6 +79,13 @@ final class ToDoListViewModel: ObservableObject {
             case .failure(let error):
                 state = .failed(error)
             }
+        }
+    }
+    // Update the status of the task
+    func updateStatus(id: UUID) {
+        Task {
+            _ = await taskService.updateTaskStatus(id: id)
+//            self.fetchToDoTasks()
         }
     }
 }

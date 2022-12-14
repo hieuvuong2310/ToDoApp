@@ -32,6 +32,7 @@ protocol ToDoService {
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError>
     func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError>
     func getTasks() async -> Result<ToDoTasks, TaskError>
+    func updateTaskStatus(id: UUID) async -> Result<TaskModel, TaskError>
 }
 
 final class FeaturesToDo: ToDoService {
@@ -59,6 +60,7 @@ final class FeaturesToDo: ToDoService {
     }
     convenience init() {
         self.init(dateChecker: Calendar.current)
+        print(tasks)
     }
     // Create a task
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError> {
@@ -88,5 +90,17 @@ final class FeaturesToDo: ToDoService {
             }
         }
         return .success(ToDoTasks(today: today, other: other))
+    }
+    // Update task status
+    func updateTaskStatus(id: UUID) async -> Result<TaskModel, TaskError>{
+        guard let index = tasks.firstIndex(where: {
+            $0.id == id
+        }) else {
+            return .failure(TaskError.unavailableTask)
+        }
+        var todo = tasks[index]
+        todo.status.toggle()
+        tasks[index] = todo
+        return .success(todo)
     }
 }
