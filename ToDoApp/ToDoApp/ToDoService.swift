@@ -60,7 +60,6 @@ final class FeaturesToDo: ToDoService {
     }
     convenience init() {
         self.init(dateChecker: Calendar.current)
-        print(tasks)
     }
     // Create a task
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError> {
