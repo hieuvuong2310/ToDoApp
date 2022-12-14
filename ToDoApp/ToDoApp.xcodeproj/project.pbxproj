@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A1C8D6929494CD2000AC68F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1C8D6829494CD2000AC68F /* Introspect */; };
 		3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C67293F225D0054EED9 /* ColorStyle.swift */; };
-		3A360C74294156650054EED9 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3A360C73294156650054EED9 /* Introspect */; };
 		3A360C7B294166440054EED9 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C7A294166440054EED9 /* ToDoListView.swift */; };
 		3A4C5F5329398054002EEE92 /* ToDoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5F142938393A002EEE92 /* ToDoService.swift */; };
 		3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */; };
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A360C74294156650054EED9 /* Introspect in Frameworks */,
+				3A1C8D6929494CD2000AC68F /* Introspect in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +201,7 @@
 			);
 			name = ToDoApp;
 			packageProductDependencies = (
-				3A360C73294156650054EED9 /* Introspect */,
+				3A1C8D6829494CD2000AC68F /* Introspect */,
 			);
 			productName = ToDoApp;
 			productReference = 3A9060DE2937DD47003648F6 /* ToDoApp.app */;
@@ -276,8 +276,8 @@
 			);
 			mainGroup = 3A9060D52937DD47003648F6;
 			packageReferences = (
-				3A360C72294156650054EED9 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				3A360C752941575D0054EED9 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				3A1C8D6729494CD2000AC68F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 3A9060DF2937DD47003648F6 /* Products */;
 			projectDirPath = "";
@@ -654,7 +654,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3A360C72294156650054EED9 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+		3A1C8D6729494CD2000AC68F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
 			requirement = {
@@ -673,9 +673,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3A360C73294156650054EED9 /* Introspect */ = {
+		3A1C8D6829494CD2000AC68F /* Introspect */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 3A360C72294156650054EED9 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			package = 3A1C8D6729494CD2000AC68F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
 		};
 /* End XCSwiftPackageProductDependency section */

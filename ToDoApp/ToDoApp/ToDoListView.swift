@@ -55,9 +55,11 @@ struct ToDoListView: View {
                 }
                 )
                 .padding(.trailing, 17)
-                .sheet(item: $viewModel.destination, onDismiss: { viewModel.reload()
-                    viewModel.onAppear()
-                }) { destination in
+                .sheet(item: Binding(
+                    get: { viewModel.destination },
+                    set: { _ in viewModel.resetDestination()}
+                )
+                ) { destination in
                     switch destination {
                     case .addTask(let viewModel):
                         CreateTaskView(viewModel: viewModel)

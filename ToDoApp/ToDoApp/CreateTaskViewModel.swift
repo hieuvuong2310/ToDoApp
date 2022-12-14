@@ -13,14 +13,26 @@ enum InputErrors: Identifiable, Hashable {
         hashValue
     }
 }
+@MainActor
 class CreateTaskViewModel: ObservableObject {
+    // MARK: Internal Properties
     @Published var error: InputErrors?
+    // MARK: Dependencies
     private let taskService: ToDoService
-    init(taskService: ToDoService) {
+    private let onSaved: () -> Void
+    private let onCancelled: () -> Void
+    
+    init(taskService: ToDoService,
+         onCancelled: @escaping () -> Void,
+         onSaved: @escaping () -> Void
+    ) {
         self.taskService = taskService
+        self.onCancelled = onCancelled
+        self.onSaved = onSaved
     }
-    convenience init() {
-        self.init(taskService: FeaturesToDo())
+    // Handle when "Cancel" button is tapped
+    func onCancelButtonTapped() {
+        onCancelled()
     }
     // Handle when "Save" button is tapped
     func onSaveButtonTapped(inputTitle: String, date: Date) {
@@ -29,7 +41,8 @@ class CreateTaskViewModel: ObservableObject {
             error = .invalidTitle
         } else {
             Task {
-                await taskService.createTask(title: inputTitle, deadline: date)
+                _ = await taskService.createTask(title: inputTitle, deadline: date)
+                onSaved()
             }
         }
     }

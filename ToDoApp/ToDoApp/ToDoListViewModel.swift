@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class ToDoListViewModel: ObservableObject {
     enum State {
         case idle
@@ -15,13 +16,16 @@ final class ToDoListViewModel: ObservableObject {
         case failed(Error)
     }
     enum Destination: Identifiable {
-        var id: String {
-            return "id"
+        var id: ObjectIdentifier {
+            switch self {
+            case .addTask(let viewModel):
+                return ObjectIdentifier(viewModel)
+            }
         }
         case addTask(CreateTaskViewModel)
     }
-    @Published var destination: Destination?
-    @Published var state: State = .idle
+    @Published private(set) var destination: Destination?
+    @Published private(set) var state: State = .idle
     private let taskService: ToDoService
     init(taskService: ToDoService) {
         self.taskService = taskService
@@ -33,6 +37,24 @@ final class ToDoListViewModel: ObservableObject {
         if case .loaded = state {
             return
         }
+        fetchToDoTasks()
+    }
+    // Tap add button
+    func addButtonTapped() {
+        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService) { [weak self] in
+            self?.resetDestination()
+        } onSaved: { [weak self] in
+            self?.resetDestination()
+            self?.fetchToDoTasks()
+        }
+        destination = .addTask(createTaskViewModel)
+    }
+    // Reset destination
+    func resetDestination() {
+        destination = nil
+    }
+    // Reload the state when navigate to ToDoListView
+    private func fetchToDoTasks() {
         if case .loading = state {
             return
         }
@@ -58,14 +80,5 @@ final class ToDoListViewModel: ObservableObject {
                 state = .failed(error)
             }
         }
-    }
-    // Tap add button
-    func addButtonTapped() {
-        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel()
-        destination = .addTask(createTaskViewModel)
-    }
-    // Reload the state when navigate to ToDoListView
-    func reload() {
-        state = .idle
     }
 }

@@ -10,12 +10,11 @@ import SwiftUI
 import Introspect
 
 struct CreateTaskView: View {
-    @ObservedObject private var createTaskViewModel: CreateTaskViewModel
-    @Environment(\.presentationMode) private var presentationMode
+    @ObservedObject private var viewModel: CreateTaskViewModel
     @State var titleInput: String = ""
     @State var date: Date = Date()
     init(viewModel: CreateTaskViewModel) {
-        self.createTaskViewModel = viewModel
+        self.viewModel = viewModel
     }
     var body: some View {
         NavigationStack {
@@ -56,7 +55,7 @@ struct CreateTaskView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") {
-                        presentationMode.wrappedValue.dismiss()
+                        viewModel.onCancelButtonTapped()
                     }
                 }
                 ToolbarItem(placement: .principal) {
@@ -64,13 +63,12 @@ struct CreateTaskView: View {
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        createTaskViewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
-                        presentationMode.wrappedValue.dismiss()
+                        viewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
                     }
                 }
             }
             .foregroundColor(Color(.primaryAccent))
-            .alert(item: $createTaskViewModel.error, content: { error in
+            .alert(item: $viewModel.error, content: { error in
                 switch error {
                 case .invalidTitle:
                     return Alert(title: Text("Error"), message: Text("Title cannot be left empty."))
@@ -82,6 +80,10 @@ struct CreateTaskView: View {
 
 struct CreateTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateTaskView(viewModel: CreateTaskViewModel())
+        CreateTaskView(viewModel: CreateTaskViewModel(
+            taskService: FeaturesToDo(),
+            onCancelled: {},
+            onSaved: {}
+        ))
     }
 }
