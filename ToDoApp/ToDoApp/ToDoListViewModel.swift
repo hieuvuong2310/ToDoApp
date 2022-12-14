@@ -7,6 +7,7 @@
 
 import Foundation
 
+@MainActor
 final class ToDoListViewModel: ObservableObject {
     enum State {
         case idle
@@ -14,7 +15,17 @@ final class ToDoListViewModel: ObservableObject {
         case loaded([ToDoSection])
         case failed(Error)
     }
-    @Published var state: State = .idle
+    enum Destination: Identifiable {
+        var id: ObjectIdentifier {
+            switch self {
+            case .addTask(let viewModel):
+                return ObjectIdentifier(viewModel)
+            }
+        }
+        case addTask(CreateTaskViewModel)
+    }
+    @Published private(set) var destination: Destination?
+    @Published private(set) var state: State = .idle
     private let taskService: ToDoService
     init(taskService: ToDoService) {
         self.taskService = taskService
@@ -26,6 +37,24 @@ final class ToDoListViewModel: ObservableObject {
         if case .loaded = state {
             return
         }
+        fetchToDoTasks()
+    }
+    // Tap add button
+    func addButtonTapped() {
+        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService) { [weak self] in
+            self?.resetDestination()
+        } onSaved: { [weak self] in
+            self?.resetDestination()
+            self?.fetchToDoTasks()
+        }
+        destination = .addTask(createTaskViewModel)
+    }
+    // Reset destination
+    func resetDestination() {
+        destination = nil
+    }
+    // Reload the state when navigate to ToDoListView
+    private func fetchToDoTasks() {
         if case .loading = state {
             return
         }
@@ -36,10 +65,15 @@ final class ToDoListViewModel: ObservableObject {
             case .success(let todos):
                 var todoSections: [ToDoSection] = []
                 if !todos.today.isEmpty {
-                    todoSections.append(ToDoSection(title: NSLocalizedString("Today’s To-Do List", comment: "today tasks section title"), toDoItems: todos.today))
+                    todoSections.append(
+                        ToDoSection(title: NSLocalizedString("Today’s To-Do List",
+                                                             comment: "today tasks section title"),
+                                    toDoItems: todos.today))
                 }
                 if !todos.other.isEmpty {
-                    todoSections.append(ToDoSection(title: NSLocalizedString("All To-Do List", comment: "other tasks section title"), toDoItems: todos.other))
+                    todoSections.append(
+                        ToDoSection(title: NSLocalizedString("All To-Do List", comment: "other tasks section title"),
+                                    toDoItems: todos.other))
                 }
                 state = .loaded(todoSections)
             case .failure(let error):

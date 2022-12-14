@@ -13,10 +13,10 @@ struct ToDoSection: Identifiable {
     let toDoItems: [TaskModel]
 }
 struct ToDoListView: View {
-    @StateObject var viewModel = ToDoListViewModel()
+    @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
     var body: some View {
-        NavigationStack{
-            Group {
+        NavigationStack {
+            ZStack(alignment: .bottomTrailing) {
                 switch viewModel.state {
                 case .idle:
                     EmptyView()
@@ -39,8 +39,31 @@ struct ToDoListView: View {
                                 TaskCell(todo: todo)
                             }
                         }
+                        Color.clear
+                            .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
                     }
                     .listStyle(.plain)
+                }
+                Button( action: {
+                    viewModel.addButtonTapped()
+                }, label: {
+                    Image(systemName: "plus")
+                        .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
+                        .foregroundColor(.white)
+                        .background(Color(.primaryButton))
+                        .clipShape(Circle())
+                }
+                )
+                .padding(.trailing, 17)
+                .sheet(item: Binding(
+                    get: { viewModel.destination },
+                    set: { _ in viewModel.resetDestination()}
+                )
+                ) { destination in
+                    switch destination {
+                    case .addTask(let viewModel):
+                        CreateTaskView(viewModel: viewModel)
+                    }
                 }
             }
             .navigationTitle("To-Do List")
@@ -72,6 +95,11 @@ struct TaskCell: View {
     }
     func formatDate(deadline: Date) -> String {
         return deadline.formatted(date: .abbreviated, time: .shortened)
+    }
+}
+private extension ToDoListView {
+    enum Constants {
+        static let addButtonSize: CGFloat = 57
     }
 }
 struct ToDoListView_Previews: PreviewProvider {
