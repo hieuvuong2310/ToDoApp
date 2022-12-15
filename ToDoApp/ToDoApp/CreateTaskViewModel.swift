@@ -21,7 +21,6 @@ class CreateTaskViewModel: ObservableObject {
     private let taskService: ToDoService
     private let onSaved: () -> Void
     private let onCancelled: () -> Void
-    
     init(taskService: ToDoService,
          onCancelled: @escaping () -> Void,
          onSaved: @escaping () -> Void

@@ -81,4 +81,11 @@ final class ToDoListViewModel: ObservableObject {
             }
         }
     }
+    // Update the status of the task
+    func updateStatus(id: UUID) {
+        Task {
+            _ = await taskService.updateTaskStatus(id: id)
+            self.fetchToDoTasks()
+        }
+    }
 }

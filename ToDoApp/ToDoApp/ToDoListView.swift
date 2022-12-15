@@ -36,7 +36,7 @@ struct ToDoListView: View {
                             }
                             .font(.caption)
                             ForEach(tasks.toDoItems) { todo in
-                                TaskCell(todo: todo)
+                                TaskCell(todo: todo, viewModel: viewModel)
                             }
                         }
                         Color.clear
@@ -75,10 +75,15 @@ struct ToDoListView: View {
 }
 struct TaskCell: View {
     var todo: TaskModel
+    var viewModel: ToDoListViewModel
+    init(todo: TaskModel, viewModel: ToDoListViewModel) {
+        self.todo = todo
+        self.viewModel = viewModel
+    }
     var body: some View {
         HStack(spacing: 30) {
             Button( action: {
-                print("Change status")
+                viewModel.updateStatus(id: todo.id)
             }, label: {
                 Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
                     .foregroundColor(Color(.checkmarkButton))
