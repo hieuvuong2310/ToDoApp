@@ -37,6 +37,14 @@ struct ToDoListView: View {
                             .font(.caption)
                             ForEach(tasks.toDoItems) { todo in
                                 TaskCell(todo: todo, viewModel: viewModel)
+                                    .swipeActions {
+                                        Button(role: .none, action: {
+                                            viewModel.editButtonTapped(todo: todo)
+                                        }, label: {
+                                            Image(systemName: "pencil")
+                                        })
+                                        .tint(Color(.primaryButton))
+                                    }
                             }
                         }
                         Color.clear

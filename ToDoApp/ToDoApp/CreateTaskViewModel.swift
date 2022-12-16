@@ -13,21 +13,38 @@ enum InputErrors: Identifiable, Hashable {
         hashValue
     }
 }
+enum CreateTaskViewMode {
+    case createNewTask
+    case editExistingTask(TaskModel)
+}
 @MainActor
 class CreateTaskViewModel: ObservableObject {
     // MARK: Internal Properties
     @Published var error: InputErrors?
+    @Published var title: String
+    @Published var deadline: Date
+    @Published private(set) var mode: CreateTaskViewMode?
     // MARK: Dependencies
     private let taskService: ToDoService
     private let onSaved: () -> Void
     private let onCancelled: () -> Void
     init(taskService: ToDoService,
+         mode: CreateTaskViewMode,
          onCancelled: @escaping () -> Void,
          onSaved: @escaping () -> Void
     ) {
         self.taskService = taskService
         self.onCancelled = onCancelled
         self.onSaved = onSaved
+        self.mode = mode
+        switch mode {
+        case .createNewTask:
+            self.title = ""
+            self.deadline = Date()
+        case .editExistingTask(let todo):
+            self.title = todo.title
+            self.deadline = todo.deadline
+        }
     }
     // Handle when "Cancel" button is tapped
     func onCancelButtonTapped() {
@@ -35,14 +52,26 @@ class CreateTaskViewModel: ObservableObject {
     }
     // Handle when "Save" button is tapped
     func onSaveButtonTapped(inputTitle: String, date: Date) {
-        // Check whether the input is correct or not.
         if inputTitle == ""{
             error = .invalidTitle
-        } else {
-            Task {
-                _ = await taskService.createTask(title: inputTitle, deadline: date)
-                onSaved()
+        }
+        else {
+            switch mode {
+            case .createNewTask:
+                Task {
+                    _ = await taskService.createTask(title: inputTitle, deadline: date)
+                    onSaved()
+                }
+            case .editExistingTask(let todo):
+                Task {
+                    _ = await taskService.updateTask(todo: todo, newTitle: inputTitle, newDeadline: date)
+                    onSaved()
+                }
+            case .none:
+                print("error")
             }
         }
+        
     }
+    
 }
