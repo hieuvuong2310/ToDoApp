@@ -37,6 +37,14 @@ struct ToDoListView: View {
                             .font(.caption)
                             ForEach(tasks.toDoItems) { todo in
                                 TaskCell(todo: todo, viewModel: viewModel)
+                                    .swipeActions {
+                                        Button(role: .none, action: {
+                                            viewModel.editButtonTapped(todo: todo)
+                                        }, label: {
+                                            Image(systemName: "pencil")
+                                        })
+                                        .tint(Color(.primaryButton))
+                                    }
                             }
                         }
                         Color.clear
@@ -83,7 +91,7 @@ struct TaskCell: View {
     var body: some View {
         HStack(spacing: 30) {
             Button( action: {
-                viewModel.updateStatus(id: todo.id)
+                viewModel.updateStatus(todo: todo)
             }, label: {
                 Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
                     .foregroundColor(Color(.checkmarkButton))

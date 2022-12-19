@@ -13,36 +13,65 @@ enum InputErrors: Identifiable, Hashable {
         hashValue
     }
 }
+enum CreateTaskViewMode {
+    case createNewTask
+    case editExistingTask(TaskModel)
+}
 @MainActor
 class CreateTaskViewModel: ObservableObject {
     // MARK: Internal Properties
     @Published var error: InputErrors?
+    @Published var title: String
+    @Published var deadline: Date
+    let mode: CreateTaskViewMode
     // MARK: Dependencies
     private let taskService: ToDoService
     private let onSaved: () -> Void
     private let onCancelled: () -> Void
     init(taskService: ToDoService,
+         mode: CreateTaskViewMode,
          onCancelled: @escaping () -> Void,
          onSaved: @escaping () -> Void
     ) {
         self.taskService = taskService
         self.onCancelled = onCancelled
         self.onSaved = onSaved
+        self.mode = mode
+        switch mode {
+        case .createNewTask:
+            self.title = ""
+            self.deadline = Date()
+        case .editExistingTask(let todo):
+            self.title = todo.title
+            self.deadline = todo.deadline
+        }
     }
     // Handle when "Cancel" button is tapped
     func onCancelButtonTapped() {
         onCancelled()
     }
     // Handle when "Save" button is tapped
-    func onSaveButtonTapped(inputTitle: String, date: Date) {
-        // Check whether the input is correct or not.
-        if inputTitle == ""{
+    func onSaveButtonTapped() {
+        if title == ""{
             error = .invalidTitle
-        } else {
-            Task {
-                _ = await taskService.createTask(title: inputTitle, deadline: date)
-                onSaved()
+        }
+        else {
+            switch mode {
+            case .createNewTask:
+                Task {
+                    _ = await taskService.createTask(title: title, deadline: deadline)
+                    onSaved()
+                }
+            case .editExistingTask(var todo):
+                Task {
+                    todo.title = title
+                    todo.deadline = deadline
+                    _ = await taskService.updateTask(todo: todo)
+                    onSaved()
+                }
             }
         }
+        
     }
+    
 }
