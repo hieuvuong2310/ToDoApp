@@ -23,7 +23,7 @@ class CreateTaskViewModel: ObservableObject {
     @Published var error: InputErrors?
     @Published var title: String
     @Published var deadline: Date
-    @Published private(set) var mode: CreateTaskViewMode?
+    @Published private(set) var mode: CreateTaskViewMode
     // MARK: Dependencies
     private let taskService: ToDoService
     private let onSaved: () -> Void
@@ -51,24 +51,24 @@ class CreateTaskViewModel: ObservableObject {
         onCancelled()
     }
     // Handle when "Save" button is tapped
-    func onSaveButtonTapped(inputTitle: String, date: Date) {
-        if inputTitle == ""{
+    func onSaveButtonTapped() {
+        if title == ""{
             error = .invalidTitle
         }
         else {
             switch mode {
             case .createNewTask:
                 Task {
-                    _ = await taskService.createTask(title: inputTitle, deadline: date)
+                    _ = await taskService.createTask(title: title, deadline: deadline)
                     onSaved()
                 }
-            case .editExistingTask(let todo):
+            case .editExistingTask(var todo):
                 Task {
-                    _ = await taskService.updateTask(todo: todo, newTitle: inputTitle, newDeadline: date)
+                    todo.title = title
+                    todo.deadline = deadline
+                    _ = await taskService.updateTask(todo: todo)
                     onSaved()
                 }
-            case .none:
-                print("error")
             }
         }
         

@@ -39,24 +39,16 @@ final class ToDoListViewModel: ObservableObject {
         }
         fetchToDoTasks()
     }
-    // Tap Edit button
-    func editButtonTapped(todo: TaskModel) {
-        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService, mode: .editExistingTask(todo)) { [weak self] in self?.resetDestination()
-        } onSaved: { [weak self] in
-            self?.resetDestination()
-            self?.fetchToDoTasks()
-        }
-        destination = .addTask(createTaskViewModel)
-    }
-    // Tap add button
-    func addButtonTapped() {
-        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService, mode: .createNewTask) { [weak self] in
+    // Handle eddting or creating task when edit or add button is tapped
+    func addEditButtonTapped(mode: CreateTaskViewMode) {
+        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService, mode: mode) { [weak self] in
             self?.resetDestination()
         } onSaved: { [weak self] in
             self?.resetDestination()
             self?.fetchToDoTasks()
         }
         destination = .addTask(createTaskViewModel)
+        
     }
     // Reset destination
     func resetDestination() {
@@ -91,9 +83,11 @@ final class ToDoListViewModel: ObservableObject {
         }
     }
     // Update the status of the task
-    func updateStatus(id: UUID) {
+    func updateStatus(todo: TaskModel) {
         Task {
-            _ = await taskService.updateTaskStatus(id: id)
+            var task = todo
+            task.status.toggle()
+            _ = await taskService.updateTask(todo: task)
             self.fetchToDoTasks()
         }
     }

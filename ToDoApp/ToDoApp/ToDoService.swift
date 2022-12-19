@@ -30,9 +30,8 @@ extension Calendar: DateChecker {}
 
 protocol ToDoService {
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError>
-    func updateTask(todo: TaskModel, newTitle: String, newDeadline: Date) async -> Result<TaskModel, TaskError>
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError>
     func getTasks() async -> Result<ToDoTasks, TaskError>
-    func updateTaskStatus(id: UUID) async -> Result<TaskModel, TaskError>
 }
 
 final class FeaturesToDo: ToDoService {
@@ -69,17 +68,14 @@ final class FeaturesToDo: ToDoService {
         return .success(oneTask)
     }
     // Update the task
-    func updateTask(todo: TaskModel, newTitle: String, newDeadline: Date) async -> Result<TaskModel, TaskError> {
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, TaskError> {
         guard let index = tasks.firstIndex(where: {
             $0.id == todo.id
         })else {
             return .failure(TaskError.unavailableTask)
         }
-        var correctTask = tasks[index]
-        correctTask.title = newTitle
-        correctTask.deadline = newDeadline
-        tasks[index] = correctTask
-        return .success(correctTask)
+        tasks[index] = todo
+        return .success(todo)
     }
     // Get all the tasks in the storage and put them into correct buckets
     func getTasks() async -> Result<ToDoTasks, TaskError> {
@@ -93,17 +89,5 @@ final class FeaturesToDo: ToDoService {
             }
         }
         return .success(ToDoTasks(today: today, other: other))
-    }
-    // Update task status
-    func updateTaskStatus(id: UUID) async -> Result<TaskModel, TaskError> {
-        guard let index = tasks.firstIndex(where: {
-            $0.id == id
-        }) else {
-            return .failure(TaskError.unavailableTask)
-        }
-        var todo = tasks[index]
-        todo.status.toggle()
-        tasks[index] = todo
-        return .success(todo)
     }
 }

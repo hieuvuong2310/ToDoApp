@@ -39,7 +39,7 @@ struct ToDoListView: View {
                                 TaskCell(todo: todo, viewModel: viewModel)
                                     .swipeActions {
                                         Button(role: .none, action: {
-                                            viewModel.editButtonTapped(todo: todo)
+                                            viewModel.addEditButtonTapped(mode: .editExistingTask(todo))
                                         }, label: {
                                             Image(systemName: "pencil")
                                         })
@@ -53,7 +53,7 @@ struct ToDoListView: View {
                     .listStyle(.plain)
                 }
                 Button( action: {
-                    viewModel.addButtonTapped()
+                    viewModel.addEditButtonTapped(mode: .createNewTask)
                 }, label: {
                     Image(systemName: "plus")
                         .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
@@ -91,7 +91,7 @@ struct TaskCell: View {
     var body: some View {
         HStack(spacing: 30) {
             Button( action: {
-                viewModel.updateStatus(id: todo.id)
+                viewModel.updateStatus(todo: todo)
             }, label: {
                 Image(systemName: (todo.status ? "checkmark.circle.fill" : "circle"))
                     .foregroundColor(Color(.checkmarkButton))

@@ -11,19 +11,8 @@ import Introspect
 
 struct CreateTaskView: View {
     @ObservedObject private var viewModel: CreateTaskViewModel
-    @State var titleInput: String = ""
-    @State var date: Date = Date()
-    private var placeHolderTitle: String
     init(viewModel: CreateTaskViewModel) {
         self.viewModel = viewModel
-        switch viewModel.mode {
-        case .createNewTask:
-            self.placeHolderTitle = "Insert Title"
-        case .editExistingTask(_):
-            self.placeHolderTitle = viewModel.title
-        case .none:
-            self.placeHolderTitle = "Insert Title"
-        }
     }
     var body: some View {
         NavigationStack {
@@ -31,7 +20,7 @@ struct CreateTaskView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Task Name")
                         .foregroundColor(Color(.primaryText))
-                    TextField(placeHolderTitle, text: $titleInput)
+                    TextField("Insert Title", text: $viewModel.title)
                         .padding(.horizontal, 16.0)
                         .textInputAutocapitalization(.words)
                         .frame(minHeight: 44)
@@ -40,13 +29,13 @@ struct CreateTaskView: View {
                                 .stroke(Color(.secondaryAccent), lineWidth: 1)
                         )
                         .introspectTextField(customize: {
-                            $0.clearButtonMode = .whileEditing
+                                $0.clearButtonMode = .whileEditing
                         })
-                }
+                    }
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Date of Completion")
                         .foregroundColor(Color(.primaryText))
-                    DatePicker(selection: $date) {
+                    DatePicker(selection: $viewModel.deadline) {
                         Text("Select date")
                             .foregroundColor(Color(.primaryText))
                     }
@@ -72,14 +61,12 @@ struct CreateTaskView: View {
                     case .createNewTask:
                         Text("Create New Task").bold()
                     case .editExistingTask(_):
-                        Text("Edit Task")
-                    case .none:
-                        Text("Error")
+                        Text("Edit Task").bold()
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
-                        viewModel.onSaveButtonTapped(inputTitle: self.titleInput, date: self.date)
+                        viewModel.onSaveButtonTapped()
                     }
                 }
             }
@@ -98,7 +85,7 @@ struct CreateTaskView_Previews: PreviewProvider {
     static var previews: some View {
         CreateTaskView(viewModel: CreateTaskViewModel(
             taskService: FeaturesToDo(),
-            mode: .editExistingTask(TaskModel(title: "Testing", deadline: Date())),
+            mode: .editExistingTask(TaskModel(title: "Hi", deadline: Date())),
             onCancelled: {},
             onSaved: {}
         ))
