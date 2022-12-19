@@ -67,7 +67,6 @@ final class ToDoListViewModel: ObservableObject {
         if case .loading = state {
             return
         }
-        state = .loading
         Task {
             let result = await taskService.getTasks()
             switch result {
