@@ -39,7 +39,7 @@ struct ToDoListView: View {
                                 TaskCell(todo: todo, viewModel: viewModel)
                                     .swipeActions {
                                         Button(role: .none, action: {
-                                            viewModel.addEditButtonTapped(mode: .editExistingTask(todo))
+                                            viewModel.editButtonTapped(todo: todo)
                                         }, label: {
                                             Image(systemName: "pencil")
                                         })
@@ -53,7 +53,7 @@ struct ToDoListView: View {
                     .listStyle(.plain)
                 }
                 Button( action: {
-                    viewModel.addEditButtonTapped(mode: .createNewTask)
+                    viewModel.addButtonTapped()
                 }, label: {
                     Image(systemName: "plus")
                         .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)

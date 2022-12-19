@@ -23,7 +23,7 @@ class CreateTaskViewModel: ObservableObject {
     @Published var error: InputErrors?
     @Published var title: String
     @Published var deadline: Date
-    @Published private(set) var mode: CreateTaskViewMode
+    let mode: CreateTaskViewMode
     // MARK: Dependencies
     private let taskService: ToDoService
     private let onSaved: () -> Void

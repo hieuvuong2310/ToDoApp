@@ -39,8 +39,16 @@ final class ToDoListViewModel: ObservableObject {
         }
         fetchToDoTasks()
     }
+    // Handle add button tapped
+    func addButtonTapped() {
+        addEditButtonTapped(mode: .createNewTask)
+    }
+    // Handle edit button tapped
+    func editButtonTapped(todo: TaskModel) {
+        addEditButtonTapped(mode: .editExistingTask(todo))
+    }
     // Handle eddting or creating task when edit or add button is tapped
-    func addEditButtonTapped(mode: CreateTaskViewMode) {
+    private func addEditButtonTapped(mode: CreateTaskViewMode) {
         let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService, mode: mode) { [weak self] in
             self?.resetDestination()
         } onSaved: { [weak self] in
