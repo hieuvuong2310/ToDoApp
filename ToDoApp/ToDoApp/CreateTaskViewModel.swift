@@ -52,10 +52,9 @@ class CreateTaskViewModel: ObservableObject {
     }
     // Handle when "Save" button is tapped
     func onSaveButtonTapped() {
-        if title == ""{
+        if title == "" {
             error = .invalidTitle
-        }
-        else {
+        } else {
             switch mode {
             case .createNewTask:
                 Task {
@@ -71,7 +70,5 @@ class CreateTaskViewModel: ObservableObject {
                 }
             }
         }
-        
     }
-    
 }
