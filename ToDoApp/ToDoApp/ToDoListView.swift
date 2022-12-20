@@ -20,8 +20,6 @@ struct ToDoListView: View {
                 switch viewModel.state {
                 case .idle:
                     EmptyView()
-                case .loading:
-                    ProgressView()
                 case .failed(let error):
                     Text(error.localizedDescription)
                 case .loaded(let sections):
@@ -51,26 +49,29 @@ struct ToDoListView: View {
                             .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
                     }
                     .listStyle(.plain)
-                }
-                Button( action: {
-                    viewModel.addButtonTapped()
-                }, label: {
-                    Image(systemName: "plus")
-                        .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
-                        .foregroundColor(.white)
-                        .background(Color(.primaryButton))
-                        .clipShape(Circle())
-                }
-                )
-                .padding(.trailing, 17)
-                .sheet(item: Binding(
-                    get: { viewModel.destination },
-                    set: { _ in viewModel.resetDestination()}
-                )
-                ) { destination in
-                    switch destination {
-                    case .addTask(let viewModel):
-                        CreateTaskView(viewModel: viewModel)
+                    if viewModel.loading {
+                        ProgressView()
+                    }
+                    Button( action: {
+                        viewModel.addButtonTapped()
+                    }, label: {
+                        Image(systemName: "plus")
+                            .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
+                            .foregroundColor(.white)
+                            .background(Color(.primaryButton))
+                            .clipShape(Circle())
+                    }
+                    )
+                    .padding(.trailing, 17)
+                    .sheet(item: Binding(
+                        get: { viewModel.destination },
+                        set: { _ in viewModel.resetDestination()}
+                    )
+                    ) { destination in
+                        switch destination {
+                        case .addTask(let viewModel):
+                            CreateTaskView(viewModel: viewModel)
+                        }
                     }
                 }
             }
