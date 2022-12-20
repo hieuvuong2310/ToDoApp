@@ -11,7 +11,6 @@ import Foundation
 final class ToDoListViewModel: ObservableObject {
     enum State {
         case idle
-        case loading
         case loaded([ToDoSection])
         case failed(Error)
     }
@@ -26,6 +25,7 @@ final class ToDoListViewModel: ObservableObject {
     }
     @Published private(set) var destination: Destination?
     @Published private(set) var state: State = .idle
+    @Published private(set) var loading: Bool = false
     private let taskService: ToDoService
     init(taskService: ToDoService) {
         self.taskService = taskService
@@ -37,6 +37,7 @@ final class ToDoListViewModel: ObservableObject {
         if case .loaded = state {
             return
         }
+        loading = true
         fetchToDoTasks()
     }
     // Handle add button tapped
@@ -64,9 +65,6 @@ final class ToDoListViewModel: ObservableObject {
     }
     // Reload the state when navigate to ToDoListView
     private func fetchToDoTasks() {
-        if case .loading = state {
-            return
-        }
         Task {
             let result = await taskService.getTasks()
             switch result {
@@ -84,6 +82,7 @@ final class ToDoListViewModel: ObservableObject {
                                     toDoItems: todos.other))
                 }
                 state = .loaded(todoSections)
+                loading = false
             case .failure(let error):
                 state = .failed(error)
             }
@@ -91,10 +90,11 @@ final class ToDoListViewModel: ObservableObject {
     }
     // Update the status of the task
     func updateStatus(todo: TaskModel) {
+        var task = todo
+        task.status.toggle()
         Task {
-            var task = todo
-            task.status.toggle()
             _ = await taskService.updateTask(todo: task)
+            loading = true
             self.fetchToDoTasks()
         }
     }
