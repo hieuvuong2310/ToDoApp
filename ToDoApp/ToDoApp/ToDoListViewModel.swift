@@ -37,7 +37,6 @@ final class ToDoListViewModel: ObservableObject {
         if case .loaded = state {
             return
         }
-        loading = true
         fetchToDoTasks()
     }
     // Handle add button tapped
@@ -65,6 +64,7 @@ final class ToDoListViewModel: ObservableObject {
     }
     // Reload the state when navigate to ToDoListView
     private func fetchToDoTasks() {
+        loading = true
         Task {
             let result = await taskService.getTasks()
             switch result {
@@ -82,19 +82,18 @@ final class ToDoListViewModel: ObservableObject {
                                     toDoItems: todos.other))
                 }
                 state = .loaded(todoSections)
-                loading = false
             case .failure(let error):
                 state = .failed(error)
             }
         }
+        loading = false
     }
     // Update the status of the task
     func updateStatus(todo: TaskModel) {
-        var task = todo
-        task.status.toggle()
         Task {
+            var task = todo
+            task.status.toggle()
             _ = await taskService.updateTask(todo: task)
-            loading = true
             self.fetchToDoTasks()
         }
     }

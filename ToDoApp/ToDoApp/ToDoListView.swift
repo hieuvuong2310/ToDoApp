@@ -70,17 +70,6 @@ struct ToDoListView: View {
                             CreateTaskView(viewModel: viewModel)
                         }
                     }
-                    .padding(.trailing, 17)
-                    .sheet(item: Binding(
-                        get: { viewModel.destination },
-                        set: { _ in viewModel.resetDestination()}
-                    )
-                    ) { destination in
-                        switch destination {
-                        case .addTask(let viewModel):
-                            CreateTaskView(viewModel: viewModel)
-                        }
-                    }
                 }
                 if viewModel.loading {
                     ProgressView()
