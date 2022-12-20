@@ -6,10 +6,34 @@
 //
 
 import SwiftUI
+import Introspect
 
 struct LoginView: View {
+    @ObservedObject private var viewModel: LoginViewModel = LoginViewModel()
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            VStack {
+                Text("Login")
+                    .bold()
+                    .font(.largeTitle)
+                Text("Welcome Back")
+                    .foregroundColor(Color(.secondaryText))
+                TextField("Email", text: $viewModel.email)
+                    .padding(.horizontal, 16.0)
+                    .frame(minHeight: 44)
+                    .introspectTextField(customize: {
+                            $0.clearButtonMode = .whileEditing
+                    })
+                Divider()
+                TextField("Password", text: $viewModel.password)
+                    .padding(.horizontal, 16.0)
+                    .frame(minHeight: 44)
+                    .introspectTextField(customize: {
+                            $0.clearButtonMode = .whileEditing
+                    })
+                Divider()
+            }
+        }
     }
 }
 
