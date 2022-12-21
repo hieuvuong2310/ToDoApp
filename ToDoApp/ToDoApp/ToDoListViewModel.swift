@@ -49,8 +49,7 @@ final class ToDoListViewModel: ObservableObject {
     }
     // Handle eddting or creating task when edit or add button is tapped
     private func addEditButtonTapped(mode: CreateTaskViewMode) {
-        let createTaskViewModel: CreateTaskViewModel =
-        CreateTaskViewModel(taskService: taskService, mode: mode) { [weak self] in
+        let createTaskViewModel: CreateTaskViewModel = CreateTaskViewModel(taskService: taskService, mode: mode) { [weak self] in
             self?.resetDestination()
         } onSaved: { [weak self] in
             self?.resetDestination()
@@ -64,6 +63,9 @@ final class ToDoListViewModel: ObservableObject {
     }
     // Reload the state when navigate to ToDoListView
     private func fetchToDoTasks() {
+        if loading {
+            return
+        }
         loading = true
         Task {
             let result = await taskService.getTasks()
@@ -85,8 +87,8 @@ final class ToDoListViewModel: ObservableObject {
             case .failure(let error):
                 state = .failed(error)
             }
+            loading = false
         }
-        loading = false
     }
     // Update the status of the task
     func updateStatus(todo: TaskModel) {
