@@ -24,7 +24,7 @@ struct ToDoListView: View {
                     VStack(spacing: 20) {
                         Text(error.localizedDescription)
                         Button("Retry") {
-                            viewModel.onAppear()
+                            viewModel.retryButtonTapped()
                         }
                     }
                 case .loaded(let sections):
