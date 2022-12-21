@@ -50,7 +50,21 @@ final class FeaturesToDo: ToDoService {
               deadline: Date(timeIntervalSince1970: 1702350877), status: false),
         .init(title: "Clean car", deadline: Date(), status: true),
         .init(title: "Workout", deadline: Date(), status: true),
-        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
+        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false),
+        .init(title: "Study", deadline: Date(), status: false),
+        .init(title: "Project", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
+        .init(title: "Iron clothes", deadline: Date(), status: true),
+        .init(title: "Shopping", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
+        .init(title: "Final", deadline: Date(), status: true),
+        .init(title: "Clean dishes", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(title: "Clean house", deadline: Date(), status: true),
+        .init(title: "Gym", deadline: Date(), status: true),
+        .init(title: "Swimming", deadline: Date(), status: false),
+        .init(title: "Biking",
+              deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(title: "Clean kitchen", deadline: Date(), status: true),
+        .init(title: "Hiking", deadline: Date(), status: true),
+        .init(title: "Skating", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
     ]
     // MARK: - Dependencies
     private let dateChecker: DateChecker

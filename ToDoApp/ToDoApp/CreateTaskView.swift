@@ -57,7 +57,7 @@ struct CreateTaskView: View {
                     }
                 }
                 ToolbarItem(placement: .principal) {
-                    switch viewModel.mode{
+                    switch viewModel.mode {
                     case .createNewTask:
                         Text("Create New Task").bold()
                     case .editExistingTask(_):
