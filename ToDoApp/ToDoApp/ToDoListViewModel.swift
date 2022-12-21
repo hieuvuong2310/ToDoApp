@@ -99,4 +99,8 @@ final class ToDoListViewModel: ObservableObject {
             self.fetchToDoTasks()
         }
     }
+    // Handle when retry button is tapped
+    func retryButtonTapped() {
+        self.fetchToDoTasks()
+    }
 }

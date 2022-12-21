@@ -21,7 +21,12 @@ struct ToDoListView: View {
                 case .idle:
                     EmptyView()
                 case .failed(let error):
-                    Text(error.localizedDescription)
+                    VStack(spacing: 20) {
+                        Text(error.localizedDescription)
+                        Button("Retry") {
+                            viewModel.retryButtonTapped()
+                        }
+                    }
                 case .loaded(let sections):
                     List {
                         ForEach(sections) { tasks in
