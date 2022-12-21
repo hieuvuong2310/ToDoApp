@@ -93,7 +93,6 @@ final class FeaturesToDo: ToDoService {
     }
     // Get all the tasks in the storage and put them into correct buckets
     func getTasks() async -> Result<ToDoTasks, TaskError> {
-        try? await Task.sleep(for: .seconds(5))
         var today: [TaskModel] = []
         var other: [TaskModel] = []
         for task in tasks.sorted(by: { $0.deadline < $1.deadline }) {
