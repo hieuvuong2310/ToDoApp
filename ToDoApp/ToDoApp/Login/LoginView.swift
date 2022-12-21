@@ -13,27 +13,69 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             VStack {
+                Spacer()
                 Text("Login")
                     .bold()
                     .font(.largeTitle)
-                Text("Welcome Back")
+                Text("Welcome Back.")
                     .foregroundColor(Color(.secondaryText))
+                Rectangle()
+                    .foregroundColor(.white)
+                    .frame(maxHeight: 62)
                 TextField("Email", text: $viewModel.email)
                     .padding(.horizontal, 16.0)
+                    .textInputAutocapitalization(.never)
                     .frame(minHeight: 44)
                     .introspectTextField(customize: {
                             $0.clearButtonMode = .whileEditing
                     })
                 Divider()
-                TextField("Password", text: $viewModel.password)
-                    .padding(.horizontal, 16.0)
-                    .frame(minHeight: 44)
-                    .introspectTextField(customize: {
-                            $0.clearButtonMode = .whileEditing
-                    })
+                HStack {
+                    SecureField("Password", text: $viewModel.password)
+                        .padding(.horizontal, 16.0)
+                        .textInputAutocapitalization(.never)
+                        .frame(minHeight: 44)
+                        .introspectTextField(customize: {
+                                $0.clearButtonMode = .whileEditing
+                        })
+                    Text("Forgot password?")
+                        .foregroundColor(Color(.checkmarkButton))
+                        .padding(.trailing, 16)
+                        .onTapGesture {
+                            viewModel.forgotPassword()
+                        }
+                }
                 Divider()
+                Spacer()
+                RoundedRectangle(cornerRadius: 14)
+                    .frame(maxWidth: 343, maxHeight: 56)
+                    .foregroundColor(Color(.primaryButton))
+                    .overlay(content: {
+                        Text("Sign In")
+                            .foregroundColor(.white)
+                    })
+                    .onTapGesture {
+                        viewModel.signIn()
+                    }
+            }
+            HStack {
+                Text("Don't have account?")
+                    .foregroundColor(Color(.secondaryText))
+                Text("Create account")
+                    .foregroundColor(Color(.checkmarkButton))
+                    .onTapGesture {
+                        viewModel.navigateToSignUp()
+                    }
             }
         }
+        .alert(item: $viewModel.error, content: { error in
+            switch error {
+            case .invalidEmail:
+                return Alert(title: Text("Error"), message: Text("Invalid email."))
+            case .invalidPassword:
+                return Alert(title: Text("Error"), message: Text("Invalid password."))
+            }
+        })
     }
 }
 
