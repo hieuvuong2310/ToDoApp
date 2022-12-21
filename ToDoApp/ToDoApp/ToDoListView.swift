@@ -71,11 +71,13 @@ struct ToDoListView: View {
                         }
                     }
                 }
+            }
+            .navigationTitle("To-Do List")
+            .overlay(content: {
                 if viewModel.loading {
                     ProgressView()
                 }
-            }
-            .navigationTitle("To-Do List")
+            })
         }
         .onAppear {
             viewModel.onAppear()
