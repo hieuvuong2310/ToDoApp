@@ -6,7 +6,6 @@
 //
 
 import Foundation
-@MainActor
 enum SignInErrors: Identifiable, Hashable {
     var id: Int {
         hashValue
@@ -14,6 +13,7 @@ enum SignInErrors: Identifiable, Hashable {
     case invalidEmail
     case invalidPassword
 }
+@MainActor
 class LoginViewModel: ObservableObject {
     // MARK: Internal Properties
     @Published var error: SignInErrors?
