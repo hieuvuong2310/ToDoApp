@@ -9,6 +9,8 @@ import Foundation
 
 enum InputErrors: Identifiable, Hashable {
     case invalidTitle
+    case createTaskError
+    case updateTaskError
     var id: Int {
         hashValue
     }
@@ -58,15 +60,25 @@ class CreateTaskViewModel: ObservableObject {
             switch mode {
             case .createNewTask:
                 Task {
-                    _ = await taskService.createTask(title: title, deadline: deadline)
-                    onSaved()
+                    let result = await taskService.createTask(title: title, deadline: deadline)
+                    switch result {
+                    case .success(_):
+                        onSaved()
+                    case .failure(_):
+                        error = .createTaskError
+                    }
                 }
             case .editExistingTask(var todo):
                 Task {
                     todo.title = title
                     todo.deadline = deadline
-                    _ = await taskService.updateTask(todo: todo)
-                    onSaved()
+                    let result = await taskService.updateTask(todo: todo)
+                    switch result {
+                    case .success(_):
+                        onSaved()
+                    case .failure(_):
+                        error = .updateTaskError
+                    }
                 }
             }
         }

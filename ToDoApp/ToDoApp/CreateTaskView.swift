@@ -75,6 +75,10 @@ struct CreateTaskView: View {
                 switch error {
                 case .invalidTitle:
                     return Alert(title: Text("Error"), message: Text("Title cannot be left empty."))
+                case .createTaskError:
+                    return Alert(title: Text("Error"), message: Text("Task cannot be saved."))
+                case .updateTaskError:
+                    return Alert(title: Text("Error"), message: Text("Edit cannot be saved."))
                 }
             })
         }
