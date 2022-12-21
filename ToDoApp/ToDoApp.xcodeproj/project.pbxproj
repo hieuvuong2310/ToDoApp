@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A1C8D6929494CD2000AC68F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1C8D6829494CD2000AC68F /* Introspect */; };
-		3A1C8D7229523B51000AC68F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C8D7129523B51000AC68F /* LoginView.swift */; };
-		3A1C8D7729528131000AC68F /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C8D7629528131000AC68F /* LoginViewModel.swift */; };
 		3A1C8D7A295296AF000AC68F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C8D79295296AF000AC68F /* SignUpView.swift */; };
 		3A1C8D7C295296C1000AC68F /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1C8D7B295296C1000AC68F /* SignUpViewModel.swift */; };
 		3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C67293F225D0054EED9 /* ColorStyle.swift */; };
@@ -44,8 +42,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3A1C8D7129523B51000AC68F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
-		3A1C8D7629528131000AC68F /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		3A1C8D79295296AF000AC68F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		3A1C8D7B295296C1000AC68F /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		3A360C67293F225D0054EED9 /* ColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyle.swift; sourceTree = "<group>"; };
@@ -91,15 +87,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A1C8D7029523B3F000AC68F /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				3A1C8D7129523B51000AC68F /* LoginView.swift */,
-				3A1C8D7629528131000AC68F /* LoginViewModel.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		3A1C8D782952969C000AC68F /* Signup */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				3A1C8D782952969C000AC68F /* Signup */,
-				3A1C8D7029523B3F000AC68F /* Login */,
 				3A360C79294166310054EED9 /* ToDoList */,
 				3A360C69293FC8250054EED9 /* Common */,
 				3A4C5FAC293A90A6002EEE92 /* Service */,
@@ -356,10 +342,8 @@
 				3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */,
 				3AAD16FC2943D38A001099D6 /* ToDoListViewModel.swift in Sources */,
 				3A1C8D7A295296AF000AC68F /* SignUpView.swift in Sources */,
-				3A1C8D7229523B51000AC68F /* LoginView.swift in Sources */,
 				3A9060E22937DD47003648F6 /* ToDoAppApp.swift in Sources */,
 				3A1C8D7C295296C1000AC68F /* SignUpViewModel.swift in Sources */,
-				3A1C8D7729528131000AC68F /* LoginViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
