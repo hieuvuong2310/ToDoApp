@@ -14,6 +14,12 @@ final class ToDoListViewModel: ObservableObject {
         case loaded([ToDoSection])
         case failed(Error)
     }
+    enum UpdateError: Identifiable, Hashable {
+        case updateStatusFailed
+        var id: Int {
+            hashValue
+        }
+    }
     enum Destination: Identifiable {
         var id: ObjectIdentifier {
             switch self {
@@ -26,6 +32,7 @@ final class ToDoListViewModel: ObservableObject {
     @Published private(set) var destination: Destination?
     @Published private(set) var state: State = .idle
     @Published private(set) var loading: Bool = false
+    @Published var error: UpdateError?
     private let taskService: ToDoService
     init(taskService: ToDoService) {
         self.taskService = taskService
@@ -95,8 +102,13 @@ final class ToDoListViewModel: ObservableObject {
         Task {
             var task = todo
             task.status.toggle()
-            _ = await taskService.updateTask(todo: task)
-            self.fetchToDoTasks()
+            let result = await taskService.updateTask(todo: task)
+            switch result {
+            case .success(_):
+                self.fetchToDoTasks()
+            case .failure(_):
+                error = .updateStatusFailed
+            }
         }
     }
     // Handle when retry button is tapped

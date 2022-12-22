@@ -87,6 +87,12 @@ struct ToDoListView: View {
         .onAppear {
             viewModel.onAppear()
         }
+        .alert(item: $viewModel.error, content: { error in
+            switch error {
+            case .updateStatusFailed:
+                return Alert(title: Text("Error"), message: Text("Task status cannot be updated."))
+            }
+        })
     }
 }
 struct TaskCell: View {
