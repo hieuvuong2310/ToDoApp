@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>219378975745-lra846mor8r9v4dkqn11t4k1eetjni0d.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.219378975745-lra846mor8r9v4dkqn11t4k1eetjni0d</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAkUV1Pyc5zkL2dPUMZSbleUSIKfdt5aCA</string>
+	<key>GCM_SENDER_ID</key>
+	<string>219378975745</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>Atimi.testing2</string>
+	<key>PROJECT_ID</key>
+	<string>test-af399</string>
+	<key>STORAGE_BUCKET</key>
+	<string>test-af399.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:219378975745:ios:9e5e1ca69acc6c3644ec00</string>
+</dict>
+</plist>
