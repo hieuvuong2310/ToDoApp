@@ -9,12 +9,13 @@ import Foundation
 
 enum TaskError: Error {
     case unavailableTask
+    case unsavedTask
 }
 
-struct TaskModel: Identifiable {
-    let id: UUID = UUID()
-    var title: String
-    var deadline: Date
+struct TaskModel: Identifiable, Codable {
+    var id: UUID = UUID()
+    var title: String = ""
+    var deadline: Date = Date()
     var status: Bool = false
 }
 
