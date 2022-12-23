@@ -12,7 +12,7 @@ enum TaskError: Error {
 }
 
 struct TaskModel: Identifiable, Codable {
-    let id: UUID = UUID()
+    let id: UUID
     var title: String
     var deadline: Date
     var status: Bool = false
@@ -37,34 +37,35 @@ protocol ToDoService {
 final class FeaturesToDo: ToDoService {
     // Private properties
     private var tasks: [TaskModel] = [
-        .init(title: "Cleaning", deadline: Date(), status: false),
-        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
-        .init(title: "Painting", deadline: Date(), status: true),
-        .init(title: "Learning", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
-        .init(title: "Midterm", deadline: Date(), status: true),
-        .init(title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
-        .init(title: "Clean car", deadline: Date(), status: true),
-        .init(title: "Workout", deadline: Date(), status: true),
-        .init(title: "Cooking", deadline: Date(), status: false),
-        .init(title: "Final for Introduction to Computer Theory and Processing, Algorithms",
+        .init(id: UUID()
+              , title: "Cleaning", deadline: Date(), status: false),
+        .init(id: UUID(), title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
+        .init(id: UUID(), title: "Painting", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Learning", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
+        .init(id: UUID(), title: "Midterm", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Laundry", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(id: UUID(), title: "Clean car", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Workout", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Cooking", deadline: Date(), status: false),
+        .init(id: UUID(), title: "Final for Introduction to Computer Theory and Processing, Algorithms",
               deadline: Date(timeIntervalSince1970: 1702350877), status: false),
-        .init(title: "Clean car", deadline: Date(), status: true),
-        .init(title: "Workout", deadline: Date(), status: true),
-        .init(title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false),
-        .init(title: "Study", deadline: Date(), status: false),
-        .init(title: "Project", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
-        .init(title: "Iron clothes", deadline: Date(), status: true),
-        .init(title: "Shopping", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
-        .init(title: "Final", deadline: Date(), status: true),
-        .init(title: "Clean dishes", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
-        .init(title: "Clean house", deadline: Date(), status: true),
-        .init(title: "Gym", deadline: Date(), status: true),
-        .init(title: "Swimming", deadline: Date(), status: false),
-        .init(title: "Biking",
+        .init(id: UUID(), title: "Clean car", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Workout", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: false),
+        .init(id: UUID(), title: "Study", deadline: Date(), status: false),
+        .init(id: UUID(), title: "Project", deadline: Date(timeIntervalSince1970: 1670128119), status: true),
+        .init(id: UUID(), title: "Iron clothes", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Shopping", deadline: Date(timeIntervalSince1970: 1636600477), status: true),
+        .init(id: UUID(), title: "Final", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Clean dishes", deadline: Date(timeIntervalSince1970: 1702350877), status: false),
+        .init(id: UUID(), title: "Clean house", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Gym", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Swimming", deadline: Date(), status: false),
+        .init(id: UUID(), title: "Biking",
               deadline: Date(timeIntervalSince1970: 1702350877), status: false),
-        .init(title: "Clean kitchen", deadline: Date(), status: true),
-        .init(title: "Hiking", deadline: Date(), status: true),
-        .init(title: "Skating", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
+        .init(id: UUID(), title: "Clean kitchen", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Hiking", deadline: Date(), status: true),
+        .init(id: UUID(), title: "Skating", deadline: Date(timeIntervalSince1970: 1670128119), status: false)
     ]
     // MARK: - Dependencies
     private let dateChecker: DateChecker
@@ -77,7 +78,7 @@ final class FeaturesToDo: ToDoService {
     }
     // Create a task
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, TaskError> {
-        let oneTask = TaskModel(title: title, deadline: deadline)
+        let oneTask = TaskModel(id: UUID(), title: title, deadline: deadline)
         tasks.append(oneTask)
         return .success(oneTask)
     }

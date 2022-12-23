@@ -9,36 +9,34 @@ import Foundation
 import FirebaseDatabase
 import FirebaseDatabaseSwift
 protocol Repository {
-    func createOrUpdate<T>(_ value: T) async -> Error? where T: Identifiable, T: Encodable, T.ID == UUID
-    func read<T>() async -> Result<[T], Error> where T: Decodable
+    func createOrUpdate<T>(_ value: T) async -> RepositoryError? where T: Identifiable, T: Encodable, T.ID == UUID
+    func read<T>() async -> Result<[T], RepositoryError> where T: Decodable
+}
+enum RepositoryError: Error {
+    case createOrUpdateError
+    case failedToFetchData
 }
 extension DatabaseReference: Repository {
   // MARK: create a task
-    func createOrUpdate<T>(_ value: T) async -> Error? where T: Identifiable, T: Encodable, T.ID == UUID {
+    func createOrUpdate<T>(_ value: T) async -> RepositoryError? where T: Identifiable, T: Encodable, T.ID == UUID {
         guard let encodedValue = value.toDictionary else {
-            return .some("Error encoding value" as! Error)
+            return RepositoryError.createOrUpdateError
         }
         do {
            try await  self.child(value.id.uuidString).setValue(encodedValue)
-        } catch (let error) {
-            return error
+        } catch (_) {
+            return RepositoryError.createOrUpdateError
         }
         return nil
     }
-    func read<T>() async -> Result<[T], Error> where T : Decodable {
+    func read<T>() async -> Result<[T], RepositoryError> where T : Decodable {
         var task: [T] = []
-        var taskError: Error?
-        self.observe(.value) { parentSnapshot, error in
-            guard let children = parentSnapshot.children.allObjects as? [DataSnapshot] else {
-                taskError = .some("not available task" as! Error)
-                return
-            }
-            task = children.compactMap({ snapshot in
-                return try? snapshot.data(as: T.self)
-            })
-        }
-        if taskError != nil {
-            return .failure(taskError!)
+        do {
+            let children = try await self.getData().children
+            guard let allObjects = children.allObjects as? [DataSnapshot] else { return .failure(RepositoryError.failedToFetchData) }
+            task = try allObjects.map({try $0.data(as: T.self)})
+        } catch {
+            return .failure(RepositoryError.failedToFetchData)
         }
         return .success(task)
     }
