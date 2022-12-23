@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3A1C8D6929494CD2000AC68F /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 3A1C8D6829494CD2000AC68F /* Introspect */; };
-		3A254BAF2955267A00AAEFDC /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 3A254BAE2955267A00AAEFDC /* FirebaseAnalytics */; };
-		3A254BB12955267A00AAEFDC /* FirebaseAnalyticsSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A254BB02955267A00AAEFDC /* FirebaseAnalyticsSwift */; };
 		3A254BB32955267A00AAEFDC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 3A254BB22955267A00AAEFDC /* FirebaseDatabase */; };
 		3A254BB52955267A00AAEFDC /* FirebaseDatabaseSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3A254BB42955267A00AAEFDC /* FirebaseDatabaseSwift */; };
 		3A254BB8295527C500AAEFDC /* Respository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A254BB7295527C500AAEFDC /* Respository.swift */; };
@@ -73,8 +71,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A254BB52955267A00AAEFDC /* FirebaseDatabaseSwift in Frameworks */,
-				3A254BB12955267A00AAEFDC /* FirebaseAnalyticsSwift in Frameworks */,
-				3A254BAF2955267A00AAEFDC /* FirebaseAnalytics in Frameworks */,
 				3A254BB32955267A00AAEFDC /* FirebaseDatabase in Frameworks */,
 				3A1C8D6929494CD2000AC68F /* Introspect in Frameworks */,
 			);
@@ -235,8 +231,6 @@
 			name = ToDoApp;
 			packageProductDependencies = (
 				3A1C8D6829494CD2000AC68F /* Introspect */,
-				3A254BAE2955267A00AAEFDC /* FirebaseAnalytics */,
-				3A254BB02955267A00AAEFDC /* FirebaseAnalyticsSwift */,
 				3A254BB22955267A00AAEFDC /* FirebaseDatabase */,
 				3A254BB42955267A00AAEFDC /* FirebaseDatabaseSwift */,
 			);
@@ -726,16 +720,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3A1C8D6729494CD2000AC68F /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
 			productName = Introspect;
-		};
-		3A254BAE2955267A00AAEFDC /* FirebaseAnalytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3A254BAD2955267A00AAEFDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalytics;
-		};
-		3A254BB02955267A00AAEFDC /* FirebaseAnalyticsSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3A254BAD2955267A00AAEFDC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsSwift;
 		};
 		3A254BB22955267A00AAEFDC /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;

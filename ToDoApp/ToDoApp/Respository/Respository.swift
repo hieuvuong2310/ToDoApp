@@ -30,14 +30,12 @@ extension DatabaseReference: Repository {
         return nil
     }
     func read<T>() async -> Result<[T], RepositoryError> where T : Decodable {
-        var task: [T] = []
         do {
             let children = try await self.getData().children
             guard let allObjects = children.allObjects as? [DataSnapshot] else { return .failure(RepositoryError.failedToFetchData) }
-            task = try allObjects.map({try $0.data(as: T.self)})
+            return .success(try allObjects.map({try $0.data(as: T.self)}))
         } catch {
             return .failure(RepositoryError.failedToFetchData)
         }
-        return .success(task)
     }
 }
