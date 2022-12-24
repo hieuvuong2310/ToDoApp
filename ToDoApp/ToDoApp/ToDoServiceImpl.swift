@@ -7,11 +7,6 @@
 
 import Foundation
 import FirebaseDatabase
-import FirebaseDatabaseSwift
-enum TaskError: Error {
-    case unavailableTask
-}
-
 struct TaskModel: Identifiable, Codable {
     let id: UUID
     var title: String
@@ -30,8 +25,7 @@ protocol DateChecker {
 extension Calendar: DateChecker {}
 
 protocol ToDoService {
-    func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>
-    func updateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError>
+    func createOrUpdateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError>
     func getTasks() async -> Result<ToDoTasks, RepositoryError>
 }
 
@@ -47,22 +41,12 @@ final class ToDoServiceImpl: ToDoService {
     convenience init() {
         self.init(dateChecker: Calendar.current, repo: Database.database().reference())
     }
-    func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>{
-        let oneTask = TaskModel(id: UUID(), title: title, deadline: deadline)
-        let result = await repo.createOrUpdate(oneTask)
-        if (result != nil) {
-            return .failure(result!)
-        } else {
-            return .success(oneTask)
+    func createOrUpdateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError> {
+        let error = await repo.createOrUpdate(todo)
+        if let error {
+            return .failure(error)
         }
-    }
-    func updateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError> {
-        let result = await repo.createOrUpdate(todo)
-        if (result != nil) {
-            return .failure(result!)
-        } else {
-            return .success(todo)
-        }
+        return .success(todo)
     }
     func getTasks() async -> Result<ToDoTasks, RepositoryError> {
         let result: Result<[TaskModel], _> = await repo.read()
