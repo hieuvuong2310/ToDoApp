@@ -88,7 +88,7 @@ struct CreateTaskView: View {
 struct CreateTaskView_Previews: PreviewProvider {
     static var previews: some View {
         CreateTaskView(viewModel: CreateTaskViewModel(
-            taskService: FeaturesToDo(),
+            taskService: ToDoServiceImpl(),
             mode: .editExistingTask(TaskModel(id: UUID(), title: "Hi", deadline: Date())),
             onCancelled: {},
             onSaved: {}
