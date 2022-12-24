@@ -60,8 +60,7 @@ class CreateTaskViewModel: ObservableObject {
             switch mode {
             case .createNewTask:
                 Task {
-                    let todo = TaskModel(id: UUID(), title: title, deadline: deadline)
-                    let result = await taskService.createOrUpdateTask(todo: todo)
+                    let result = await taskService.createTask(title: title, deadline: deadline)
                     switch result {
                     case .success(_):
                         onSaved()
@@ -73,7 +72,7 @@ class CreateTaskViewModel: ObservableObject {
                 Task {
                     todo.title = title
                     todo.deadline = deadline
-                    let result = await taskService.createOrUpdateTask(todo: todo)
+                    let result = await taskService.updateTask(todo: todo)
                     switch result {
                     case .success(_):
                         onSaved()

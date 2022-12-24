@@ -102,7 +102,7 @@ final class ToDoListViewModel: ObservableObject {
         Task {
             var task = todo
             task.status.toggle()
-            let result = await taskService.createOrUpdateTask(todo: task)
+            let result = await taskService.updateTask(todo: task)
             switch result {
             case .success(_):
                 self.fetchToDoTasks()

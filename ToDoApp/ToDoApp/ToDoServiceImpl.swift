@@ -25,7 +25,8 @@ protocol DateChecker {
 extension Calendar: DateChecker {}
 
 protocol ToDoService {
-    func createOrUpdateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError>
+    func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError>
     func getTasks() async -> Result<ToDoTasks, RepositoryError>
 }
 
@@ -41,7 +42,11 @@ final class ToDoServiceImpl: ToDoService {
     convenience init() {
         self.init(dateChecker: Calendar.current, repo: Database.database().reference())
     }
-    func createOrUpdateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError> {
+    func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>{
+        let oneTask = TaskModel(id: UUID(), title: title, deadline: deadline)
+        return await updateTask(todo: oneTask)
+    }
+    func updateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError> {
         let error = await repo.createOrUpdate(todo)
         if let error {
             return .failure(error)
