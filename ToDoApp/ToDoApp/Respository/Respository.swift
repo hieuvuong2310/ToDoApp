@@ -17,14 +17,14 @@ enum RepositoryError: Error {
     case failedToFetchData
 }
 extension DatabaseReference: Repository {
-  // MARK: create a task
+    // MARK: create a task
     func createOrUpdate<T>(_ value: T) async -> RepositoryError? where T: Identifiable, T: Encodable, T.ID == UUID {
         guard let encodedValue = value.toDictionary else {
             return RepositoryError.createOrUpdateError
         }
         do {
-           try await  self.child(value.id.uuidString).setValue(encodedValue)
-        } catch (_) {
+            try await  self.child(value.id.uuidString).setValue(encodedValue)
+        } catch {
             return RepositoryError.createOrUpdateError
         }
         return nil
@@ -33,7 +33,7 @@ extension DatabaseReference: Repository {
         do {
             let children = try await self.getData().children
             guard let allObjects = children.allObjects as? [DataSnapshot] else { return .failure(RepositoryError.failedToFetchData) }
-            return .success(try allObjects.map({try $0.data(as: T.self)}))
+            return .success(try allObjects.map{try $0.data(as: T.self)})
         } catch {
             return .failure(RepositoryError.failedToFetchData)
         }
