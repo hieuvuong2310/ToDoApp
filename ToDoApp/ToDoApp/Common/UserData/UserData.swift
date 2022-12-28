@@ -10,12 +10,3 @@ struct UserData: Codable {
     let id: String
     var email: String
 }
-class GenerateUser {
-    private var user: UserData = UserData(id: "", email: "")
-    func createUser(id: String, email: String) {
-        self.user = UserData(id: id, email: email)
-    }
-    func getUserId() -> String{
-        self.user.id
-    }
-}

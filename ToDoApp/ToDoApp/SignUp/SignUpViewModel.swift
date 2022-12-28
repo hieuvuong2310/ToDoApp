@@ -7,7 +7,7 @@
 
 import Foundation
 import FirebaseAuth
-enum SignUpErrors: Identifiable, Hashable {
+enum SignUpError: Identifiable, Hashable {
     var id: Int {
         hashValue
     }
@@ -19,18 +19,14 @@ enum SignUpErrors: Identifiable, Hashable {
 @MainActor
 class SignUpViewModel: ObservableObject {
     // MARK: Internal Properties
-    @Published var error: SignUpErrors?
+    @Published var error: SignUpError?
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var name: String = ""
-    @Published var isCheckBoxTapped: Bool = false
-    private let generateUser: GenerateUser = GenerateUser()
-    private func trimTextField() {
-        self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    func signUp() {
+    @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
+    private let authenticateUser: AuthenticateUser = Auth.auth()
+    private var userId: String = ""
+    func signUpButtonTapped() {
         trimTextField()
         if self.name == "" {
             error = .invalidPassword
@@ -44,28 +40,33 @@ class SignUpViewModel: ObservableObject {
             error = .invalidPassword
             return
         }
-        Auth.auth().createUser(withEmail: self.email, password: self.password) {
-            (result, error) in
-            if error != nil {
-                self.error = .authenticationError
-                return
-            } else {
-                self.generateUser.createUser(id: result!.user.uid, email: self.email)
+        Task {
+            let result = await authenticateUser.create(email: self.email, password: self.password)
+            switch result {
+            case .success(let user):
+                userId = user.id
+            case .failure(_):
+                error = .authenticationError
             }
         }
         navigateToListView()
+    }
+    private func trimTextField() {
+        self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
     private func isPasswordValid(_ password : String) -> Bool {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
-    func navigateToSignIn() {
+    func signInButtonTapped() {
         print("Sign in")
     }
-    func navigateToListView() {
-        print(generateUser.getUserId())
+    private func navigateToListView() {
+        print(userId)
     }
-    func checkBoxTapped() {
-        isCheckBoxTapped.toggle()
+    func acceptTermsAndConditionsCheckBoxTapped() {
+        isAcceptTermsAndConditionsChecked.toggle()
     }
 }

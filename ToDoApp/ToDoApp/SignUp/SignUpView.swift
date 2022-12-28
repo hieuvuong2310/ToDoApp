@@ -24,7 +24,7 @@ struct SignUpView: View {
                 VStack(alignment: .leading) {
                     TextField("Name", text: $viewModel.name)
                         .padding(.horizontal, 16.0)
-                        .textInputAutocapitalization(.never)
+                        .textContentType(.name)
                         .frame(minHeight: 60)
                         .introspectTextField(customize: {
                             $0.clearButtonMode = .whileEditing
@@ -32,7 +32,8 @@ struct SignUpView: View {
                     Divider()
                     TextField("Email", text: $viewModel.email)
                         .padding(.horizontal, 16.0)
-                        .textInputAutocapitalization(.never)
+                        .keyboardType(.emailAddress)
+                        .textContentType(.emailAddress)
                         .frame(minHeight: 60)
                         .introspectTextField(customize: {
                             $0.clearButtonMode = .whileEditing
@@ -48,49 +49,44 @@ struct SignUpView: View {
                     Divider()
                     HStack {
                         Button(action: {
-                            viewModel.checkBoxTapped()
+                            viewModel.acceptTermsAndConditionsCheckBoxTapped()
                         }, label: {
-                            Image(systemName: (viewModel.isCheckBoxTapped ?  "checkmark.square.fill" : "squareshape"))
+                            Image(systemName: (viewModel.isAcceptTermsAndConditionsChecked ?  "checkmark.square.fill" : "squareshape"))
                                 .frame(minWidth: Constants.checkBoxSize, minHeight: Constants.checkBoxSize)
                         }
                         )
-                        Text("I agree with our")
-                            .font(.caption)
-                            .foregroundColor(Color(.secondaryText))
-                        Text("Terms")
-                            .font(.caption)
-                            .bold()
-                            .foregroundColor(Color(.checkmarkButton))
-                        Text("and")
-                            .font(.caption)
-                            .foregroundColor(Color(.secondaryText))
-                        Text("Conditions")
-                            .font(.caption)
-                            .bold()
-                            .foregroundColor(Color(.checkmarkButton))
+                        Text("I agree with our Terms and Conditions")
+                        { string in
+                            string.foregroundColor = Color(.secondaryText)
+                            string.font = .caption
+                            if let range = string.range(of: "Terms") {
+                                string[range].foregroundColor = Color(.checkmarkButton)
+                            }
+                            if let range = string.range(of: "Conditions") {
+                                string[range].foregroundColor = Color(.checkmarkButton)
+                            }
+                        }
                     }
-                    .padding(.leading, 16)
+                    .padding(16)
                 }
                 Spacer()
-                RoundedRectangle(cornerRadius: 14)
-                    .frame(maxWidth: 343, maxHeight: 56)
-                    .foregroundColor(Color(.checkmarkButton))
-                    .overlay(content: {
-                        Text("Create Account")
-                            .foregroundColor(.white)
-                    })
-                    .onTapGesture {
-                        viewModel.signUp()
-                    }
+                Button("Create Account") {
+                    viewModel.signUpButtonTapped()
+                }
+                .foregroundColor(.white)
+                .buttonStyle(.bordered)
+                .frame(maxWidth: 343, maxHeight: 56)
+                .background(Color(.checkmarkButton))
             }
-            HStack {
-                Text("Already have an account?")
-                    .foregroundColor(Color(.secondaryText))
-                Text("Sign In")
-                    .foregroundColor(Color(.checkmarkButton))
-                    .onTapGesture {
-                        viewModel.navigateToSignIn()
-                    }
+            Text("Already have an account? Sign In")
+            { string in
+                string.foregroundColor = Color(.secondaryText)
+                if let range = string.range(of: "Sign In") {
+                    string[range].foregroundColor = Color(.checkmarkButton)
+                }
+            }
+            .onTapGesture {
+                viewModel.signInButtonTapped()
             }
         }
         .alert(item: $viewModel.error, content: { error in
@@ -113,7 +109,13 @@ private extension SignUpView {
         static let checkBoxSize: CGFloat = 16
     }
 }
-
+extension Text {
+    init(_ string: String, configure: ((inout AttributedString) -> Void)) {
+        var attributedString = AttributedString(string)
+        configure(&attributedString)
+        self.init(attributedString)
+    }
+}
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
