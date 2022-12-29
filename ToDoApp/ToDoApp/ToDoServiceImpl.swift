@@ -39,8 +39,8 @@ final class ToDoServiceImpl: ToDoService {
         self.dateChecker = dateChecker
         self.repo = repo
     }
-    convenience init() {
-        self.init(dateChecker: Calendar.current, repo: Database.database().reference())
+    convenience init(userId: String) {
+        self.init(dateChecker: Calendar.current, repo: Database.database().reference().child(userId))
     }
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>{
         let oneTask = TaskModel(id: UUID(), title: title, deadline: deadline)
