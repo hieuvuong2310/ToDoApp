@@ -130,6 +130,6 @@ private extension ToDoListView {
 }
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
-        ToDoListView(viewModel: ToDoListViewModel(taskService: ToDoServiceImpl(userId: "JtZM8oqs8pTsTBVfgmVhio8PbjG3")))
+        ToDoListView(viewModel: ToDoListViewModel(userId: "JtZM8oqs8pTsTBVfgmVhio8PbjG3"))
     }
 }

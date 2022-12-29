@@ -76,15 +76,16 @@ struct SignUpView: View {
                 .frame(maxWidth: 343, maxHeight: 56)
                 .background(Color(.checkmarkButton))
             }
-            Text("Already have an account? Sign In")
-            { string in
-                string.foregroundColor = Color(.secondaryText)
-                if let range = string.range(of: "Sign In") {
-                    string[range].foregroundColor = Color(.checkmarkButton)
-                }
-            }
-            .onTapGesture {
+            Button(action: {
                 viewModel.signInButtonTapped()
+            }) {
+                Text("Already have an account? Sign In")
+                         { string in
+                             string.foregroundColor = Color(.secondaryText)
+                             if let range = string.range(of: "Sign In") {
+                                 string[range].foregroundColor = Color(.checkmarkButton)
+                             }
+                         }
             }
         }
         .alert(item: $viewModel.error, content: { error in
