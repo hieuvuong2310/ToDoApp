@@ -6,7 +6,7 @@
 //
 import Foundation
 import FirebaseAuth
-enum SignInErrors: Identifiable, Hashable {
+enum SignInError: Identifiable, Hashable {
     var id: Int {
         hashValue
     }
@@ -17,15 +17,17 @@ enum SignInErrors: Identifiable, Hashable {
 @MainActor
 class LoginViewModel: ObservableObject {
     // MARK: Internal Properties
-    @Published var error: SignInErrors?
+    @Published var error: SignInError?
     @Published var email: String = ""
     @Published var password: String = ""
     private let authenticateUser: AuthenticateUser
-    init(authenticateUser: AuthenticateUser) {
+    private let passwordValidate: PasswordValidator
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
         self.authenticateUser = authenticateUser
+        self.passwordValidate = passwordValidate
     }
     convenience init() {
-        self.init(authenticateUser: Auth.auth())
+        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
     }
     func signInButtonTapped() {
         trimTextField()
@@ -33,7 +35,7 @@ class LoginViewModel: ObservableObject {
             error = .invalidEmail
             return
         }
-        if !isPasswordValid(self.password) {
+        if !passwordValidate.validate(password: self.password) {
             error = .invalidPassword
             return
         }
@@ -56,10 +58,6 @@ class LoginViewModel: ObservableObject {
     }
     private func navigateToListView() {
         print("List View")
-    }
-    private func isPasswordValid(_ password : String) -> Bool {
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        return passwordTest.evaluate(with: password)
     }
     private func trimTextField() {
         self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)

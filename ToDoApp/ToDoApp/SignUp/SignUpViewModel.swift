@@ -25,11 +25,13 @@ class SignUpViewModel: ObservableObject {
     @Published var name: String = ""
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
     private let authenticateUser: AuthenticateUser
-    init(authenticateUser: AuthenticateUser) {
+    private let passwordValidate: PasswordValidator
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
         self.authenticateUser = authenticateUser
+        self.passwordValidate = passwordValidate
     }
     convenience init() {
-        self.init(authenticateUser: Auth.auth())
+        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
     }
     func signUpButtonTapped() {
         trimTextField()
@@ -41,7 +43,7 @@ class SignUpViewModel: ObservableObject {
             error = .invalidEmail
             return
         }
-        if !isPasswordValid(self.password) {
+        if !passwordValidate.validate(password: self.password) {
             error = .invalidPassword
             return
         }
@@ -66,10 +68,6 @@ class SignUpViewModel: ObservableObject {
         self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
         self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    private func isPasswordValid(_ password : String) -> Bool {
-        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
-        return passwordTest.evaluate(with: password)
     }
     private func navigateToListView() {
         print("List View")

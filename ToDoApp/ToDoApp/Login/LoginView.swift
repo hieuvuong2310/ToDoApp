@@ -10,7 +10,6 @@ import Introspect
 struct LoginView: View {
     @ObservedObject private var viewModel: LoginViewModel = LoginViewModel()
     var body: some View {
-        NavigationStack {
             VStack {
                 Spacer()
                 Text("Login")
@@ -65,7 +64,6 @@ struct LoginView: View {
                     }
                 }
             }
-        }
         .alert(item: $viewModel.error, content: { error in
             switch error {
             case .invalidEmail:
