@@ -1,29 +1,25 @@
 //
-//  SignUpViewModel.swift
+//  LoginViewModel.swift
 //  ToDoApp
 //
 //  Created by Trong Hieu Vuong on 2022-12-20.
 //
-
 import Foundation
 import FirebaseAuth
-enum SignUpError: Identifiable, Hashable {
+enum SignInError: Identifiable, Hashable {
     var id: Int {
         hashValue
     }
     case invalidEmail
     case invalidPassword
-    case invalidName
     case authenticationError
 }
 @MainActor
-class SignUpViewModel: ObservableObject {
+class LoginViewModel: ObservableObject {
     // MARK: Internal Properties
-    @Published var error: SignUpError?
+    @Published var error: SignInError?
     @Published var email: String = ""
     @Published var password: String = ""
-    @Published var name: String = ""
-    @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
     init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
@@ -33,12 +29,8 @@ class SignUpViewModel: ObservableObject {
     convenience init() {
         self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
     }
-    func signUpButtonTapped() {
+    func signInButtonTapped() {
         trimTextField()
-        if self.name == "" {
-            error = .invalidPassword
-            return
-        }
         if self.email == "" {
             error = .invalidEmail
             return
@@ -48,7 +40,7 @@ class SignUpViewModel: ObservableObject {
             return
         }
         Task {
-            let result = await authenticateUser.create(email: self.email, password: self.password)
+            let result = await authenticateUser.login(email: self.email, password: self.password)
             switch result {
             case .success(let user):
                 print(user)
@@ -58,18 +50,17 @@ class SignUpViewModel: ObservableObject {
             }
         }
     }
-    func signInButtonTapped() {
-        print("Sign in")
+    func forgotPassword() {
+        print("Forgot password")
     }
-    func acceptTermsAndConditionsCheckBoxTapped() {
-        isAcceptTermsAndConditionsChecked.toggle()
+    func signUpButtonTapped() {
+        print("Sign up")
+    }
+    private func navigateToListView() {
+        print("List View")
     }
     private func trimTextField() {
         self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
         self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
-        self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-    private func navigateToListView() {
-        print("List View")
     }
 }
