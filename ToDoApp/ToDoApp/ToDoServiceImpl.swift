@@ -34,26 +34,27 @@ final class ToDoServiceImpl: ToDoService {
     // MARK: - Dependencies
     private let dateChecker: DateChecker
     private let repo: Repository
-    private let userId: String
     // MARK: - Init
-    init(dateChecker: DateChecker, repo: Repository, userId: String) {
+    init(dateChecker: DateChecker, repo: Repository) {
         self.dateChecker = dateChecker
         self.repo = repo
-        self.userId = userId
+    }
+    convenience init(userId: String) {
+        self.init(dateChecker: Calendar.current, repo: Database.database().reference().child(userId))
     }
     func createTask(title: String, deadline: Date) async -> Result<TaskModel, RepositoryError>{
         let oneTask = TaskModel(id: UUID(), title: title, deadline: deadline)
         return await updateTask(todo: oneTask)
     }
     func updateTask(todo: TaskModel) async -> Result<TaskModel, RepositoryError> {
-        let error = await repo.createOrUpdate(todo, self.userId)
+        let error = await repo.createOrUpdate(todo)
         if let error {
             return .failure(error)
         }
         return .success(todo)
     }
     func getTasks() async -> Result<ToDoTasks, RepositoryError> {
-        let result: Result<[TaskModel], _> = await repo.read(self.userId)
+        let result: Result<[TaskModel], _> = await repo.read()
         switch result {
         case .success(let tasks):
             var today: [TaskModel] = []

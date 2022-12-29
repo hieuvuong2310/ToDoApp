@@ -24,9 +24,13 @@ class SignUpViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var name: String = ""
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
-    @Published var moveToListView: Bool = false
-    private let authenticateUser: AuthenticateUser = Auth.auth()
-    @Published var userId: String = ""
+    private let authenticateUser: AuthenticateUser
+    init(authenticateUser: AuthenticateUser) {
+        self.authenticateUser = authenticateUser
+    }
+    convenience init() {
+        self.init(authenticateUser: Auth.auth())
+    }
     func signUpButtonTapped() {
         trimTextField()
         if self.name == "" {
@@ -45,13 +49,18 @@ class SignUpViewModel: ObservableObject {
             let result = await authenticateUser.create(email: self.email, password: self.password)
             switch result {
             case .success(let user):
-                userId = user.id
-                moveToListView.toggle()
+                print(user)
+                navigateToListView()
             case .failure(_):
                 error = .authenticationError
             }
         }
-        navigateToListView()
+    }
+    func signInButtonTapped() {
+        print("Sign in")
+    }
+    func acceptTermsAndConditionsCheckBoxTapped() {
+        isAcceptTermsAndConditionsChecked.toggle()
     }
     private func trimTextField() {
         self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -62,13 +71,7 @@ class SignUpViewModel: ObservableObject {
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=.*[a-z])(?=.*[$@$#!%*?&])[A-Za-z\\d$@$#!%*?&]{8,}")
         return passwordTest.evaluate(with: password)
     }
-    func signInButtonTapped() {
-        print("Sign in")
-    }
     private func navigateToListView() {
-        print(userId)
-    }
-    func acceptTermsAndConditionsCheckBoxTapped() {
-        isAcceptTermsAndConditionsChecked.toggle()
+        print("List View")
     }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by Trong Hieu Vuong on 2022-12-20.
 //
-import FirebaseDatabase
 import SwiftUI
 import Introspect
 struct SignUpView: View {
@@ -18,8 +17,7 @@ struct SignUpView: View {
                     .font(.largeTitle)
                 Text("Sign up with email.")
                     .foregroundColor(Color(.secondaryText))
-                Rectangle()
-                    .foregroundColor(.white)
+                Spacer()
                     .frame(maxHeight: 62)
                 VStack(alignment: .leading) {
                     TextField("Name", text: $viewModel.name)
@@ -68,7 +66,6 @@ struct SignUpView: View {
                         }
                     }
                     .padding(16)
-                    NavigationLink("", destination:  ToDoListView(viewModel: ToDoListViewModel(taskService: ToDoServiceImpl(dateChecker: Calendar.current, repo: Database.database().reference() , userId: viewModel.userId))), isActive: $viewModel.moveToListView)
                 }
                 Spacer()
                 Button("Create Account") {

@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import Introspect
-import FirebaseDatabase
 struct CreateTaskView: View {
     @ObservedObject private var viewModel: CreateTaskViewModel
     init(viewModel: CreateTaskViewModel) {
@@ -88,7 +87,7 @@ struct CreateTaskView: View {
 struct CreateTaskView_Previews: PreviewProvider {
     static var previews: some View {
         CreateTaskView(viewModel: CreateTaskViewModel(
-            taskService: ToDoServiceImpl(dateChecker: Calendar.current, repo: Database.database().reference() , userId: "JtZM8oqs8pTsTBVfgmVhio8PbjG3"),
+            taskService: ToDoServiceImpl(userId: "JtZM8oqs8pTsTBVfgmVhio8PbjG3"),
             mode: .editExistingTask(TaskModel(id: UUID(), title: "Hi", deadline: Date())),
             onCancelled: {},
             onSaved: {}

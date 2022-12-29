@@ -37,6 +37,9 @@ final class ToDoListViewModel: ObservableObject {
     init(taskService: ToDoService) {
         self.taskService = taskService
     }
+    convenience init(userId: String) {
+        self.init(taskService: ToDoServiceImpl(userId: userId))
+    }
     func onAppear() {
         if case .loaded = state {
             return
