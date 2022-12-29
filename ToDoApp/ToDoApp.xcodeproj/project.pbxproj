@@ -19,6 +19,8 @@
 		3A254BC92956DA1F00AAEFDC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3A254BC82956DA1F00AAEFDC /* FirebaseAuth */; };
 		3A254BCC2956DF1300AAEFDC /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A254BCB2956DF1300AAEFDC /* UserData.swift */; };
 		3A254BD7295CEB2B00AAEFDC /* AuthenticateUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A254BD6295CEB2B00AAEFDC /* AuthenticateUser.swift */; };
+		3A254BDA295E4F4500AAEFDC /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A254BD9295E4F4500AAEFDC /* LoginViewModel.swift */; };
+		3A254BDC295E4F5300AAEFDC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A254BDB295E4F5300AAEFDC /* LoginView.swift */; };
 		3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C67293F225D0054EED9 /* ColorStyle.swift */; };
 		3A360C7B294166440054EED9 /* ToDoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A360C7A294166440054EED9 /* ToDoListView.swift */; };
 		3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */; };
@@ -58,6 +60,8 @@
 		3A254BC52956B30D00AAEFDC /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		3A254BCB2956DF1300AAEFDC /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		3A254BD6295CEB2B00AAEFDC /* AuthenticateUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticateUser.swift; sourceTree = "<group>"; };
+		3A254BD9295E4F4500AAEFDC /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		3A254BDB295E4F5300AAEFDC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3A360C67293F225D0054EED9 /* ColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyle.swift; sourceTree = "<group>"; };
 		3A360C7A294166440054EED9 /* ToDoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListView.swift; sourceTree = "<group>"; };
 		3A4C5FA8293A8607002EEE92 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
@@ -151,6 +155,15 @@
 			path = Authentication;
 			sourceTree = "<group>";
 		};
+		3A254BD8295E4F3500AAEFDC /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3A254BD9295E4F4500AAEFDC /* LoginViewModel.swift */,
+				3A254BDB295E4F5300AAEFDC /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		3A360C69293FC8250054EED9 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +232,7 @@
 		3A9060E02937DD47003648F6 /* ToDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				3A254BD8295E4F3500AAEFDC /* Login */,
 				3A254BD5295CEB1800AAEFDC /* Authentication */,
 				3A254BC22956B2E000AAEFDC /* SignUp */,
 				3A254BC0295677FC00AAEFDC /* GoogleService-Info.plist */,
@@ -404,9 +418,11 @@
 				3A360C7B294166440054EED9 /* ToDoListView.swift in Sources */,
 				3A4C5FA9293A8607002EEE92 /* CreateTaskView.swift in Sources */,
 				3A4C5FAB293A88B5002EEE92 /* CreateTaskViewModel.swift in Sources */,
+				3A254BDC295E4F5300AAEFDC /* LoginView.swift in Sources */,
 				3A254BBB2955831200AAEFDC /* Encodable+Convenience.swift in Sources */,
 				3A360C68293F225D0054EED9 /* ColorStyle.swift in Sources */,
 				3AAD16FC2943D38A001099D6 /* ToDoListViewModel.swift in Sources */,
+				3A254BDA295E4F4500AAEFDC /* LoginViewModel.swift in Sources */,
 				3A254BD7295CEB2B00AAEFDC /* AuthenticateUser.swift in Sources */,
 				3A254BCC2956DF1300AAEFDC /* UserData.swift in Sources */,
 				3A254BC42956B30000AAEFDC /* SignUpView.swift in Sources */,
