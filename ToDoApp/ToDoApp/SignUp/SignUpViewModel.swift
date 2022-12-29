@@ -24,8 +24,9 @@ class SignUpViewModel: ObservableObject {
     @Published var password: String = ""
     @Published var name: String = ""
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
+    @Published var moveToListView: Bool = false
     private let authenticateUser: AuthenticateUser = Auth.auth()
-    private var userId: String = ""
+    @Published var userId: String = ""
     func signUpButtonTapped() {
         trimTextField()
         if self.name == "" {
@@ -45,6 +46,7 @@ class SignUpViewModel: ObservableObject {
             switch result {
             case .success(let user):
                 userId = user.id
+                moveToListView.toggle()
             case .failure(_):
                 error = .authenticationError
             }

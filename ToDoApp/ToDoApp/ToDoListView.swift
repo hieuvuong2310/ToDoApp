@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-
+import FirebaseDatabase
 struct ToDoSection: Identifiable {
     var id: UUID = UUID()
     let title: String
     let toDoItems: [TaskModel]
 }
 struct ToDoListView: View {
-    @StateObject var viewModel: ToDoListViewModel = ToDoListViewModel()
+    @StateObject var viewModel: ToDoListViewModel
     var body: some View {
         NavigationStack {
             ZStack(alignment: .bottomTrailing) {
@@ -131,6 +131,6 @@ private extension ToDoListView {
 }
 struct ToDoListView_Previews: PreviewProvider {
     static var previews: some View {
-        ToDoListView()
+        ToDoListView(viewModel: ToDoListViewModel(taskService: ToDoServiceImpl(dateChecker: Calendar.current, repo: Database.database().reference() , userId: "JtZM8oqs8pTsTBVfgmVhio8PbjG3")))
     }
 }
