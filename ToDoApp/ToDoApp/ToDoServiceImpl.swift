@@ -7,7 +7,7 @@
 
 import Foundation
 import FirebaseDatabase
-struct TaskModel: Identifiable, Codable {
+struct TaskModel: Identifiable, Codable, Equatable {
     let id: UUID
     var title: String
     var deadline: Date
