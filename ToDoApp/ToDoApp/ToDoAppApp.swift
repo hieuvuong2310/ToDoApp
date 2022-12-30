@@ -20,7 +20,7 @@ struct ToDoAppApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            RootView()
         }
     }
 }

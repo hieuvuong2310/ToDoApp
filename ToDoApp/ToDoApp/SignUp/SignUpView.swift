@@ -7,7 +7,10 @@
 import SwiftUI
 import Introspect
 struct SignUpView: View {
-    @ObservedObject private var viewModel: SignUpViewModel = SignUpViewModel()
+    @ObservedObject private var viewModel: SignUpViewModel
+    init(viewModel: SignUpViewModel) {
+        self.viewModel = viewModel
+    }
     var body: some View {
         NavigationStack {
             VStack {
@@ -117,6 +120,6 @@ extension Text {
 }
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView(viewModel: SignUpViewModel(onSignUp: {_ in "JtZM8oqs8pTsTBVfgmVhio8PbjG3"}, onLogin: {}))
     }
 }

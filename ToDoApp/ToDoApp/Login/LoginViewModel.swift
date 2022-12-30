@@ -22,12 +22,16 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = ""
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
-    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
+    private let onSignUp: () -> Void
+    private let onLogin: (String) -> Void
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: @escaping () -> Void, onLogin: @escaping (String) -> Void) {
         self.authenticateUser = authenticateUser
         self.passwordValidate = passwordValidate
+        self.onLogin = onLogin
+        self.onSignUp = onSignUp
     }
-    convenience init() {
-        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
+    convenience init(onSignUp: @escaping () -> Void, onLogin: @escaping (String) -> Void) {
+        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl(), onSignUp: onSignUp, onLogin: onLogin)
     }
     func signInButtonTapped() {
         trimTextField()
@@ -43,8 +47,7 @@ class LoginViewModel: ObservableObject {
             let result = await authenticateUser.login(email: self.email, password: self.password)
             switch result {
             case .success(let user):
-                print(user)
-                navigateToListView()
+                navigateToListView(userId: user.id)
             case .failure(_):
                 error = .authenticationError
             }
@@ -54,10 +57,10 @@ class LoginViewModel: ObservableObject {
         print("Forgot password")
     }
     func signUpButtonTapped() {
-        print("Sign up")
+        onSignUp()
     }
-    private func navigateToListView() {
-        print("List View")
+    private func navigateToListView(userId: String) {
+        onLogin(userId)
     }
     private func trimTextField() {
         self.email = email.trimmingCharacters(in: .whitespacesAndNewlines)

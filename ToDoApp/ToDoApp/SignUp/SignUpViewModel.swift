@@ -26,12 +26,16 @@ class SignUpViewModel: ObservableObject {
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
-    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
+    private let onLogin: () -> Void
+    private let onSignUp: (String) -> Void
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: @escaping (String) -> Void, onLogin: @escaping () -> Void) {
         self.authenticateUser = authenticateUser
         self.passwordValidate = passwordValidate
+        self.onLogin = onLogin
+        self.onSignUp = onSignUp
     }
-    convenience init() {
-        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
+    convenience init(onSignUp: @escaping (String) -> Void, onLogin: @escaping () -> Void) {
+        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl(), onSignUp: onSignUp, onLogin: onLogin)
     }
     func signUpButtonTapped() {
         trimTextField()
@@ -51,15 +55,14 @@ class SignUpViewModel: ObservableObject {
             let result = await authenticateUser.create(email: self.email, password: self.password)
             switch result {
             case .success(let user):
-                print(user)
-                navigateToListView()
+                navigateToListView(userId: user.id)
             case .failure(_):
                 error = .authenticationError
             }
         }
     }
     func signInButtonTapped() {
-        print("Sign in")
+        onLogin()
     }
     func acceptTermsAndConditionsCheckBoxTapped() {
         isAcceptTermsAndConditionsChecked.toggle()
@@ -69,7 +72,7 @@ class SignUpViewModel: ObservableObject {
         self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    private func navigateToListView() {
-        print("List View")
+    private func navigateToListView(userId: String) {
+        onSignUp(userId)
     }
 }
