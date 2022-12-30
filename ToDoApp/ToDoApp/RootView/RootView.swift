@@ -17,8 +17,6 @@ struct RootView: View {
             LoginView(viewModel: viewModel)
         case .signup(let viewModel):
             SignUpView(viewModel: viewModel)
-        case .none:
-            Text("Error launching the app")
         }
     }
 }

@@ -24,7 +24,9 @@ enum Destination: Identifiable {
 @MainActor
 class RootViewModel: ObservableObject {
     // MARK: Internal Properties
-    @Published var destination: Destination?
+    @Published private(set) var destination: Destination = .login(LoginViewModel(onSignUp: {
+    }, onLogin: { userId in
+    }))
     init() {
         self.presentLoginFlow()
     }
