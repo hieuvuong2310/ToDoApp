@@ -51,8 +51,10 @@ struct ToDoListView: View {
                         }
                         Color.clear
                             .frame(minWidth: Constants.addButtonSize, minHeight: Constants.addButtonSize)
+                            .listSectionSeparator(.hidden, edges: .bottom)
                     }
                     .listStyle(.plain)
+                    
                     Button( action: {
                         viewModel.addButtonTapped()
                     }, label: {

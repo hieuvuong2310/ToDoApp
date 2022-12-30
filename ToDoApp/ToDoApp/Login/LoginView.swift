@@ -55,6 +55,7 @@ struct LoginView: View {
                 .buttonStyle(.bordered)
                 .frame(maxWidth: 343, maxHeight: 56)
                 .background(Color(.checkmarkButton))
+                .cornerRadius(14)
             }
             Button(action: {
                 viewModel.signUpButtonTapped()
