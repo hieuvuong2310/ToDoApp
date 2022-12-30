@@ -8,7 +8,10 @@ import SwiftUI
 import Introspect
 
 struct LoginView: View {
-    @ObservedObject private var viewModel: LoginViewModel = LoginViewModel()
+    @ObservedObject private var viewModel: LoginViewModel
+    init(viewModel: LoginViewModel) {
+        self.viewModel = viewModel
+    }
     var body: some View {
             VStack {
                 Spacer()
@@ -54,7 +57,7 @@ struct LoginView: View {
                 .background(Color(.checkmarkButton))
             }
             Button(action: {
-                viewModel.signInButtonTapped()
+                viewModel.signUpButtonTapped()
             }) {
                 Text("Don't have account? Create account")
                 { string in
@@ -79,6 +82,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(viewModel: LoginViewModel(onSignUp: {}, onLogin: { _ in }))
     }
 }

@@ -26,12 +26,20 @@ class SignUpViewModel: ObservableObject {
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
-    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator) {
+    var onLogin: () -> Void = { fatalError("SignUpViewModel.onLogin was invoked before being initialized") }
+    var onSignUp: (String) -> Void = { _ in fatalError("SignUpViewModel.onSignUp was invoked before being initialized") }
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: ((String) -> Void)?, onLogin: (() -> Void)?) {
         self.authenticateUser = authenticateUser
         self.passwordValidate = passwordValidate
+        if let onSignUp {
+            self.onSignUp = onSignUp
+        }
+        if let onLogin {
+            self.onLogin = onLogin
+        }
     }
-    convenience init() {
-        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl())
+    convenience init(onSignUp: ((String) -> Void)? = nil, onLogin: (() -> Void)? = nil) {
+        self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl(), onSignUp: onSignUp, onLogin: onLogin)
     }
     func signUpButtonTapped() {
         trimTextField()
@@ -51,15 +59,14 @@ class SignUpViewModel: ObservableObject {
             let result = await authenticateUser.create(email: self.email, password: self.password)
             switch result {
             case .success(let user):
-                print(user)
-                navigateToListView()
+                navigateToListView(userId: user.id)
             case .failure(_):
                 error = .authenticationError
             }
         }
     }
     func signInButtonTapped() {
-        print("Sign in")
+        onLogin()
     }
     func acceptTermsAndConditionsCheckBoxTapped() {
         isAcceptTermsAndConditionsChecked.toggle()
@@ -69,7 +76,7 @@ class SignUpViewModel: ObservableObject {
         self.password = password.trimmingCharacters(in: .whitespacesAndNewlines)
         self.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
-    private func navigateToListView() {
-        print("List View")
+    private func navigateToListView(userId: String) {
+        onSignUp(userId)
     }
 }
