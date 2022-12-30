@@ -22,15 +22,19 @@ class LoginViewModel: ObservableObject {
     @Published var password: String = ""
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
-    private let onSignUp: () -> Void
-    private let onLogin: (String) -> Void
-    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: @escaping () -> Void, onLogin: @escaping (String) -> Void) {
+    var onSignUp: () -> Void = { fatalError("LoginViewModel.onSignUp was invoked before being initialized") }
+    var onLogin: (String) -> Void = { _ in fatalError("LoginViewModel.onLogin was invoked before being initialized") }
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: (() -> Void)?, onLogin: ((String) -> Void)?) {
         self.authenticateUser = authenticateUser
         self.passwordValidate = passwordValidate
-        self.onLogin = onLogin
-        self.onSignUp = onSignUp
+        if let onSignUp {
+            self.onSignUp = onSignUp
+        }
+        if let onLogin {
+            self.onLogin = onLogin
+        }
     }
-    convenience init(onSignUp: @escaping () -> Void, onLogin: @escaping (String) -> Void) {
+    convenience init(onSignUp: (() -> Void)? = nil, onLogin: ((String) -> Void)? = nil) {
         self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl(), onSignUp: onSignUp, onLogin: onLogin)
     }
     func signInButtonTapped() {

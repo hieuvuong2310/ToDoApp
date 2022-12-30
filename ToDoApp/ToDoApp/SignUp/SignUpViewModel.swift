@@ -26,15 +26,19 @@ class SignUpViewModel: ObservableObject {
     @Published private(set) var isAcceptTermsAndConditionsChecked: Bool = false
     private let authenticateUser: AuthenticateUser
     private let passwordValidate: PasswordValidator
-    private let onLogin: () -> Void
-    private let onSignUp: (String) -> Void
-    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: @escaping (String) -> Void, onLogin: @escaping () -> Void) {
+    var onLogin: () -> Void = { fatalError("SignUpViewModel.onLogin was invoked before being initialized") }
+    var onSignUp: (String) -> Void = { _ in fatalError("SignUpViewModel.onSignUp was invoked before being initialized") }
+    init(authenticateUser: AuthenticateUser, passwordValidate: PasswordValidator, onSignUp: ((String) -> Void)?, onLogin: (() -> Void)?) {
         self.authenticateUser = authenticateUser
         self.passwordValidate = passwordValidate
-        self.onLogin = onLogin
-        self.onSignUp = onSignUp
+        if let onSignUp {
+            self.onSignUp = onSignUp
+        }
+        if let onLogin {
+            self.onLogin = onLogin
+        }
     }
-    convenience init(onSignUp: @escaping (String) -> Void, onLogin: @escaping () -> Void) {
+    convenience init(onSignUp: ((String) -> Void)? = nil, onLogin: (() -> Void)? = nil) {
         self.init(authenticateUser: Auth.auth(), passwordValidate: PasswordValidatorImpl(), onSignUp: onSignUp, onLogin: onLogin)
     }
     func signUpButtonTapped() {

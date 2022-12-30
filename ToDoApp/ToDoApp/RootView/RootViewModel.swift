@@ -24,29 +24,50 @@ enum Destination: Identifiable {
 @MainActor
 class RootViewModel: ObservableObject {
     // MARK: Internal Properties
-    @Published private(set) var destination: Destination = .login(LoginViewModel(onSignUp: {
-    }, onLogin: { userId in
-    }))
+    @Published private(set) var destination: Destination {
+        didSet {
+            bind()
+        }
+    }
+    
     init() {
-        self.presentLoginFlow()
+        destination = Self.makeLoginDestination()
+        bind()
     }
 }
 extension RootViewModel {
-    private func presentLoginFlow() {
-        destination = .login(LoginViewModel(onSignUp: { [weak self] in
-            self?.presentSignUpFlow()
-        }, onLogin: { [weak self] userId in
-            self?.presentListFlow(userId: userId)
-        }))
+    private static func makeLoginDestination() -> Destination {
+        .login(LoginViewModel())
     }
-    private func presentSignUpFlow() {
-        destination = .signup(SignUpViewModel( onSignUp: { [weak self] userId in
-            self?.presentListFlow(userId: userId)
-        }, onLogin: { [weak self] in
-            self?.presentLoginFlow()
-        }))
+    private static func makeSignUpDestination() -> Destination {
+        .signup(SignUpViewModel())
     }
-    private func presentListFlow(userId: String) {
-        destination = .list(ToDoListViewModel(userId: userId))
+    private static func makeListDestination(userId: String) -> Destination {
+        .list(ToDoListViewModel(userId: userId))
+    }
+    
+    private func bind() {
+        switch destination {
+        case .login(let viewModel):
+            viewModel.onSignUp = { [weak self] in
+                guard let self else { return }
+                self.destination = Self.makeSignUpDestination()
+            }
+            viewModel.onLogin = { [weak self] userId in
+                guard let self else { return }
+                self.destination = Self.makeListDestination(userId: userId)
+            }
+        case .signup(let viewModel):
+            viewModel.onSignUp = { [weak self] userId in
+                guard let self else { return }
+                self.destination = Self.makeListDestination(userId: userId)
+            }
+            viewModel.onLogin = { [weak self] in
+                guard let self else { return }
+                self.destination = Self.makeLoginDestination()
+            }
+        case .list:
+            break
+        }
     }
 }

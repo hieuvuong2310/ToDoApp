@@ -120,6 +120,6 @@ extension Text {
 }
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView(viewModel: SignUpViewModel(onSignUp: {_ in "JtZM8oqs8pTsTBVfgmVhio8PbjG3"}, onLogin: {}))
+        SignUpView(viewModel: SignUpViewModel(onSignUp: { _ in }, onLogin: {}))
     }
 }

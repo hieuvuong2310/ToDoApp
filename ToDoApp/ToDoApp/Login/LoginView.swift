@@ -82,6 +82,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(viewModel: LoginViewModel(onSignUp: {}, onLogin: {_ in "JtZM8oqs8pTsTBVfgmVhio8PbjG3"}))
+        LoginView(viewModel: LoginViewModel(onSignUp: {}, onLogin: { _ in }))
     }
 }
