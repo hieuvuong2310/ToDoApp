@@ -42,4 +42,18 @@ final class ToDoServiceTests: XCTestCase {
         XCTAssertFalse(todoModel.status)
         XCTAssertEqual(capturedValue, todoModel)
     }
+    
+    func testCreateTask_Fail() async {
+        let repositoryMock: RepositoryMock<TaskModel> = RepositoryMock(createOrUpdate: { value in
+            // Mock repository behaviour returns nil error
+            return RepositoryError.createOrUpdateError
+        })
+        let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
+        let result = await todoService.createTask(title: "Cooking", deadline: Date(timeIntervalSince1970: 1672558922))
+        guard case .failure(let failure) = result else {
+            XCTFail("Result expected to fail")
+            return
+        }
+        XCTAssertEqual(failure, RepositoryError.createOrUpdateError)
+    }
 }
