@@ -14,7 +14,7 @@ struct TaskModel: Identifiable, Codable, Equatable {
     var status: Bool = false
 }
 
-struct ToDoTasks: Codable {
+struct ToDoTasks: Codable, Equatable {
     var today: [TaskModel]
     var other: [TaskModel]
 }
