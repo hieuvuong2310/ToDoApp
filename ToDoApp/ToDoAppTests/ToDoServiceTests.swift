@@ -63,11 +63,20 @@ final class ToDoServiceTests: XCTestCase {
     }
     
     func testGetTask_Success() async {
+        var todayId = UUID()
+        var otherDayId = UUID()
+        var today = Date()
+        var tasks: [TaskModel] = [
+                .init(id: todayId
+                      , title: "Cleaning", deadline: today, status: false),
+                .init(id: otherDayId, title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true)
+            ]
+        
         let repositoryMock: RepositoryMock<TaskModel> = RepositoryMock(createOrUpdate: { value in
             // Mock repository behaviour returns nil error
             return RepositoryError.createOrUpdateError
         }, read: {
-            return .success([TaskModel(id: UUID(), title: "Hi", deadline: Date(timeIntervalSince1970: 1672558922))])
+            return .success(tasks)
         })
         let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
         let result = await todoService.getTasks()
@@ -75,7 +84,9 @@ final class ToDoServiceTests: XCTestCase {
             XCTFail("Result expected to be success")
             return
         }
-        XCTAssertEqual(todoModel.other[0].title, "Hi")
-        XCTAssertEqual(todoModel.other[0].deadline, Date(timeIntervalSince1970: 1672558922))
+        XCTAssertEqual (todoModel, .init(today: [.init(id: todayId, title: "Cleaning", deadline: today, status: false)],
+                other: [
+                    .init(id: otherDayId, title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true)
+                ]))
     }
 }
