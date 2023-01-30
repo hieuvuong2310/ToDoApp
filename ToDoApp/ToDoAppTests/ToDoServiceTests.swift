@@ -52,7 +52,8 @@ final class ToDoServiceTests: XCTestCase {
             // Mock repository behaviour returns nil error
             return RepositoryError.createOrUpdateError
         }, read: {
-            return .failure(RepositoryError.createOrUpdateError)
+            XCTFail("Fail to create task.")
+            return
         })
         let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
         let result = await todoService.createTask(title: "Cooking", deadline: Date(timeIntervalSince1970: 1672558922))
@@ -75,7 +76,8 @@ final class ToDoServiceTests: XCTestCase {
         
         let repositoryMock: RepositoryMock<TaskModel> = RepositoryMock(createOrUpdate: { value in
             // Mock repository behaviour returns nil error
-            return RepositoryError.createOrUpdateError
+            XCTFail("Fail to create task.")
+            return
         }, read: {
             return .success(tasks)
         })
