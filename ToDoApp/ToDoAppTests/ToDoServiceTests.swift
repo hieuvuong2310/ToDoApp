@@ -31,7 +31,8 @@ final class ToDoServiceTests: XCTestCase {
             // Mock repository behaviour returns nil error
             return nil
         }, read: {
-            return .failure(RepositoryError.createOrUpdateError)
+            XCTFail("Fail to create task.")
+            return
         })
         let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
         
@@ -63,10 +64,10 @@ final class ToDoServiceTests: XCTestCase {
     }
     
     func testGetTask_Success() async {
-        var todayId = UUID()
-        var otherDayId = UUID()
-        var today = Date()
-        var tasks: [TaskModel] = [
+        let todayId = UUID()
+        let otherDayId = UUID()
+        let today = Date()
+        let tasks: [TaskModel] = [
                 .init(id: todayId
                       , title: "Cleaning", deadline: today, status: false),
                 .init(id: otherDayId, title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true)
