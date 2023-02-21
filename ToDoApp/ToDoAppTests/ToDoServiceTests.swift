@@ -9,16 +9,17 @@ import XCTest
 
 final class RepositoryMock<Value>: Repository where Value: Identifiable, Value: Encodable, Value.ID == UUID {
     private let _createOrUpdate: (Value) -> RepositoryError?
-    
-    init(createOrUpdate: @escaping (Value) -> RepositoryError?) {
+    private let _read: () -> Result<[Value], RepositoryError>
+    init(createOrUpdate: @escaping (Value) -> RepositoryError?, read: @escaping () -> Result<[Value], RepositoryError>) {
         self._createOrUpdate = createOrUpdate
+        self._read = read
     }
     
     func createOrUpdate<T>(_ value: T) async -> RepositoryError? where T: Identifiable, T: Encodable, T.ID == UUID {
         _createOrUpdate(value as! Value)
     }
     func read<T>() async ->Result<[T], RepositoryError> where T: Decodable {
-        fatalError()
+        _read() as! Result<[T], RepositoryError>
     }
 }
 final class ToDoServiceTests: XCTestCase {
@@ -29,6 +30,9 @@ final class ToDoServiceTests: XCTestCase {
             capturedValue = value
             // Mock repository behaviour returns nil error
             return nil
+        }, read: {
+            XCTFail("Fail to create task.")
+            return
         })
         let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
         
@@ -47,6 +51,9 @@ final class ToDoServiceTests: XCTestCase {
         let repositoryMock: RepositoryMock<TaskModel> = RepositoryMock(createOrUpdate: { value in
             // Mock repository behaviour returns nil error
             return RepositoryError.createOrUpdateError
+        }, read: {
+            XCTFail("Fail to create task.")
+            return
         })
         let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
         let result = await todoService.createTask(title: "Cooking", deadline: Date(timeIntervalSince1970: 1672558922))
@@ -55,5 +62,34 @@ final class ToDoServiceTests: XCTestCase {
             return
         }
         XCTAssertEqual(failure, RepositoryError.createOrUpdateError)
+    }
+    
+    func testGetTask_Success() async {
+        let todayId = UUID()
+        let otherDayId = UUID()
+        let today = Date()
+        let tasks: [TaskModel] = [
+                .init(id: todayId
+                      , title: "Cleaning", deadline: today, status: false),
+                .init(id: otherDayId, title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true)
+            ]
+        
+        let repositoryMock: RepositoryMock<TaskModel> = RepositoryMock(createOrUpdate: { value in
+            // Mock repository behaviour returns nil error
+            XCTFail("Fail to create task.")
+            return
+        }, read: {
+            return .success(tasks)
+        })
+        let todoService = ToDoServiceImpl(dateChecker: Calendar.current, repo: repositoryMock)
+        let result = await todoService.getTasks()
+        guard case .success(let todoModel) = result else {
+            XCTFail("Result expected to be success")
+            return
+        }
+        XCTAssertEqual (todoModel, .init(today: [.init(id: todayId, title: "Cleaning", deadline: today, status: false)],
+                other: [
+                    .init(id: otherDayId, title: "Cooking", deadline: Date(timeIntervalSince1970: 1670128119), status: true)
+                ]))
     }
 }

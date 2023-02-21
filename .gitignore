@@ -28,3 +28,6 @@ xcuserdata/
 **/xcshareddata/WorkspaceSettings.xcsettings
 
 # End of https://www.toptal.com/developers/gitignore/api/xcode,swiftpackagemanager
+
+### Google service
+/ToDoApp/GoogleService-Info.plist
